@@ -5,7 +5,7 @@ export function Divider(props: { style?: CSSProperties }) {
     <div
       className="DivideLine"
       style={{
-        backgroundColor: '#999',
+        backgroundColor: '#ddd',
         backgroundPosition: 'bottom',
         position: 'relative',
         width: '100%',

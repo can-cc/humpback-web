@@ -9,6 +9,7 @@ import { AppDropDown } from '../DropDown/DropDown';
 import { ListItem } from '../List/ListItem';
 import { Divider } from '../Divider';
 import { SpaceDisplay } from '../../interface/space';
+import { ListSection } from '../List/ListSection';
 
 export const AppHeaderHeight = 42;
 
@@ -51,12 +52,17 @@ export function AppHeader() {
           dropDownOverlay={
             <DropDownOverlay style={{ color: 'black' }}>
               <List>
-                {mockSpaceLists.map((space) => (
-                  <ListItem key={space.id}>{space.name}</ListItem>
-                ))}
+                <ListSection>
+                  {mockSpaceLists.map((space) => (
+                    <ListItem key={space.id}>{space.name}</ListItem>
+                  ))}
+                </ListSection>
+
                 <Divider />
-                <ListItem>空间目录</ListItem>
-                <ListItem>创建空间</ListItem>
+                <ListSection>
+                  <ListItem>空间目录</ListItem>
+                  <ListItem>创建空间</ListItem>
+                </ListSection>
               </List>
             </DropDownOverlay>
           }

@@ -5,6 +5,7 @@ export function List({ children }) {
     <ul
       style={{
         listStyle: 'none',
+        padding: 0,
       }}
     >
       {children}
