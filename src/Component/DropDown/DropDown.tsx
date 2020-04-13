@@ -46,7 +46,11 @@ export function AppDropDown({
     if (element === window.document.body) {
       return false;
     }
-    if (element.className && element.className.indexOf('DropDownOverlay') >= 0) {
+    if (
+      element.className &&
+      element.className.indexOf &&
+      element.className.indexOf('DropDownOverlay') >= 0
+    ) {
       return true;
     }
     return checkClickInOverlay(element.parentElement);
