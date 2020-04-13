@@ -1,11 +1,10 @@
 import React from 'react';
-import { SpaceDisplay } from '../../../interface/space';
 import { List } from '../../../Component/List/List';
 import { ListSection } from '../../../Component/List/ListSection';
 import { ListItem } from '../../../Component/List/ListItem';
 import { Space } from '../../../interface/page';
 
-const mockSpaceLists: Space[] = [
+const mockPages: Space[] = [
   { id: '1', name: '秦朝年历表' },
   { id: '2', name: '嬴政的一生' },
   { id: '3', name: '阿房宫真的存在吗？' },
@@ -18,7 +17,7 @@ export function SpaceSide() {
     <aside>
       <List>
         <ListSection>
-          {mockSpaceLists.map((space) => (
+          {mockPages.map((space) => (
             <ListItem key={space.id}>{space.name}</ListItem>
           ))}
         </ListSection>
