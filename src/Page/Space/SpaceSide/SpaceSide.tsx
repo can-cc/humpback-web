@@ -3,6 +3,7 @@ import { List } from '../../../Component/List/List';
 import { ListSection } from '../../../Component/List/ListSection';
 import { ListItem } from '../../../Component/List/ListItem';
 import { Space } from '../../../interface/page';
+import { SpaceInfo } from './SpaceInfo/SpaceInfo';
 
 const mockPages: Space[] = [
   { id: '1', name: '秦朝年历表' },
@@ -15,6 +16,7 @@ const mockPages: Space[] = [
 export function SpaceSide() {
   return (
     <aside>
+      <SpaceInfo space={mockPages[0]} />
       <List>
         <ListSection>
           {mockPages.map((space) => (

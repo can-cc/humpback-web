@@ -1,5 +1,5 @@
 import React from 'react';
-import { MindMapping } from '../../Component/Editor/MindMapping';
+import { MindMapping } from '../../Component/Editor/MindMapping/MindMapping';
 
 export function MindPlayGroundPage() {
   return (
