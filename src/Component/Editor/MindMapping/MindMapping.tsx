@@ -1,22 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import rd3 from 'react-d3-library';
 import { generateD3Node } from './MindMappingController';
 
-const RD3Component = rd3.Component;
-
 export function MindMapping() {
-  const [d3Data, setD3Data] = useState<HTMLDivElement>();
-  useEffect(() => {
-    setD3Data(
-      generateD3Node({
-        width: 500,
-        height: 500,
-      })
-    );
+  const buildSvgRef = useCallback((node: SVGElement) => {
+    if (!node) {
+      return;
+    }
+    generateD3Node(node);
   }, []);
+
   return (
     <div>
-      <RD3Component data={d3Data} />
+      <svg ref={buildSvgRef} width={500} height={500}></svg>
     </div>
   );
 }
