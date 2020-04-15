@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { generateD3Node } from './MindMappingController';
 
 export function MindMapping() {
