@@ -1,0 +1,7 @@
+.IconButton:hover {
+  background-color: #efefef;
+}
+
+.IconButton:active {
+  background-color: #dfdfde;
+}

@@ -5,7 +5,11 @@ import { Flex } from '../../Component/Flex';
 
 export function SpacePage() {
   return (
-    <Flex>
+    <Flex
+      style={{
+        height: '100%',
+      }}
+    >
       <SpaceSide />
       <PageDetail />
     </Flex>

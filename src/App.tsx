@@ -1,10 +1,16 @@
 import React from 'react';
-import './App.css';
 import { RootRouter } from './Router/RootRouter';
 
 function App() {
   return (
-    <div className="App">
+    <div
+      style={{
+        display: 'flex',
+        height: '100%',
+        flexDirection: 'column',
+      }}
+      className="App"
+    >
       <RootRouter />
     </div>
   );

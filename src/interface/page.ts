@@ -1,4 +1,4 @@
-export interface Space {
+export interface PageDisplay {
   id: string;
   name: string;
 }

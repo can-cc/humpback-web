@@ -1,5 +1,13 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
-export function ListItem({ children }) {
-  return <li>{children}</li>;
+export function ListItem(props: { children: ReactNode; clickable?: boolean }) {
+  return (
+    <li
+      style={{
+        fontSize: 14,
+      }}
+    >
+      {props.children}
+    </li>
+  );
 }

@@ -1,7 +1,25 @@
 import React, { CSSProperties, ReactNode } from 'react';
 
-export function Flex(props: { children: ReactNode; style?: CSSProperties }) {
+export function Flex(props: {
+  children: ReactNode;
+  className?: string;
+  style?: CSSProperties;
+  alignCenter?: boolean;
+}) {
   return (
-    <div style={{ display: 'flex', ...props.style }}>{props.children}</div>
+    <div
+      className={props.className}
+      style={{
+        display: 'flex',
+        ...(props.alignCenter
+          ? {
+              alignItems: 'center',
+            }
+          : {}),
+        ...props.style,
+      }}
+    >
+      {props.children}
+    </div>
   );
 }

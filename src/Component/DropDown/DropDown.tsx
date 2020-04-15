@@ -1,8 +1,15 @@
 import React, { useEffect, useState, ReactNode } from 'react';
 
-function DropDownToggle({ onClick, children }) {
+function DropDownToggle({ onClick, children, toggled }) {
   return (
-    <div className="DropDownToggle" onClick={onClick}>
+    <div
+      className="DropDownToggle"
+      style={{
+        userSelect: 'none',
+        cursor: 'pointer',
+      }}
+      onClick={onClick}
+    >
       {children}
     </div>
   );
@@ -14,8 +21,9 @@ function DropDownOverlay({ children }) {
       style={{
         position: 'absolute',
         minWidth: 180,
-        left: '50%',
-        transform: 'translate(-50%, 0)',
+        top: 'calc(100% + 6px)',
+        // left: '0%',
+        // transform: 'translate(0, 0)',
       }}
       className="DropDownOverlay"
     >
@@ -80,7 +88,7 @@ export function AppDropDown({
       }}
       className={`AppDropDown ${className} ${position}`}
     >
-      <DropDownToggle onClick={() => setShow(true)}>
+      <DropDownToggle toggled={show} onClick={() => setShow(true)}>
         {toggle(show)}
       </DropDownToggle>
 

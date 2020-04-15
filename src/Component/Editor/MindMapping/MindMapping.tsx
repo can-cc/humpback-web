@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import rd3 from 'react-d3-library';
 import { generateD3Node } from './MindMappingController';
 
 export function MindMapping() {
