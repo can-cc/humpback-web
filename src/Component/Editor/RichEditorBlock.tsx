@@ -6,7 +6,6 @@ import { Flex } from '../Flex';
 
 import './RichEditorBlock.css';
 
-
 export function RichEditorBlock() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const onChange = editorState => setEditorState(editorState);

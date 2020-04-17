@@ -58,9 +58,9 @@ function AppHeaderLink(props: { text: string; dropDownOverlay?: ReactNode }) {
 export function AppHeader() {
   const [createSpaceModalVisible, setCreateSpaceModalVisible] = useState(false);
 
-  useEffect(() => {
-    setCreateSpaceModalVisible(true);
-  }, []);
+  // useEffect(() => {
+  //   setCreateSpaceModalVisible(true);
+  // }, []);
 
   return (
     <>
