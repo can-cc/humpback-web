@@ -1,11 +1,17 @@
 import React, { ReactNode, CSSProperties } from 'react';
 
-export function ListSection(props: {
+export function _ListSection(props: {
   children: ReactNode;
   style?: CSSProperties;
 }) {
-  return <div style={{
-      padding: 8,
-      ...props.style
-  }}>{props.children}</div>;
+  return (
+    <div
+      style={{
+        padding: 8,
+        ...props.style
+      }}
+    >
+      {props.children}
+    </div>
+  );
 }

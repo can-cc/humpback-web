@@ -1,11 +1,20 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, CSSProperties } from 'react';
 
-export function ListItem(props: { children: ReactNode; clickable?: boolean }) {
+const clickableStyle: CSSProperties = {
+  cursor: 'pointer'
+};
+
+export function _ListItem(props: {
+  children: ReactNode;
+  onClick?: () => void;
+}) {
   return (
     <li
       style={{
         fontSize: 14,
+        ...(!!props.onClick ? clickableStyle : {})
       }}
+      onClick={props.onClick}
     >
       {props.children}
     </li>

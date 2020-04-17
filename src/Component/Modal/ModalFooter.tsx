@@ -1,16 +1,15 @@
 import React, { ReactNode, CSSProperties } from 'react';
 
-export function DropDownOverlay(props: {
+export function _ModalFooter(props: {
   children: ReactNode;
   style?: CSSProperties;
 }) {
   return (
     <div
+      className="ModalFooter"
       style={{
-        boxShadow:
-          '0 4px 8px -2px rgba(9,30,66,.25), 0 0 1px rgba(9,30,66,.31)',
-        backgroundColor: 'white',
-        borderRadius: 3,
+        padding: 12,
+        borderTop: '2px solid #ebecf0',
         ...props.style
       }}
     >

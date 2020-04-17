@@ -10,7 +10,7 @@ export function Divider(props: { style?: CSSProperties }) {
         position: 'relative',
         width: '100%',
         height: 1,
-        ...props.style,
+        ...props.style
       }}
     ></div>
   );

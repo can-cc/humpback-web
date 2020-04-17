@@ -6,7 +6,7 @@ function DropDownToggle({ onClick, children, toggled }) {
       className="DropDownToggle"
       style={{
         userSelect: 'none',
-        cursor: 'pointer',
+        cursor: 'pointer'
       }}
       onClick={onClick}
     >
@@ -21,9 +21,7 @@ function DropDownOverlay({ children }) {
       style={{
         position: 'absolute',
         minWidth: 180,
-        top: 'calc(100% + 6px)',
-        // left: '0%',
-        // transform: 'translate(0, 0)',
+        top: 'calc(100% + 6px)'
       }}
       className="DropDownOverlay"
     >
@@ -43,7 +41,7 @@ export function AppDropDown({
   toggle,
   overlay,
   className = '',
-  position = 'center',
+  position = 'center'
 }: DropDownProps) {
   const [show, setShow] = useState(false);
 
@@ -79,12 +77,13 @@ export function AppDropDown({
     return function cleanup() {
       window.document.removeEventListener('click', onClickOutSide);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show]);
 
   return (
     <div
       style={{
-        position: 'relative',
+        position: 'relative'
       }}
       className={`AppDropDown ${className} ${position}`}
     >

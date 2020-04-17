@@ -7,7 +7,7 @@ export function SpacePage() {
   return (
     <Flex
       style={{
-        height: '100%',
+        height: '100%'
       }}
     >
       <SpaceSide />

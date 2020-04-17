@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect,
+  Redirect
 } from 'react-router-dom';
 import { SpacePage } from '../Page/Space/SpacePage';
 import { AppHeader } from '../Component/AppHeader/AppHeader';

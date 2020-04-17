@@ -13,10 +13,10 @@ export function Flex(props: {
         display: 'flex',
         ...(props.alignCenter
           ? {
-              alignItems: 'center',
+              alignItems: 'center'
             }
           : {}),
-        ...props.style,
+        ...props.style
       }}
     >
       {props.children}

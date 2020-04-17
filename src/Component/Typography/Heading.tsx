@@ -1,20 +1,22 @@
 import React, { ReactNode, CSSProperties } from 'react';
+import { Text } from '../Text';
+import { TextPrimaryColor } from '../../Constant/Color';
 
-export function Text(props: {
+export function Heading(props: {
   children: ReactNode;
   style?: CSSProperties;
   className?: string;
-  inline?: string;
 }) {
-  const Ele = props.inline ? p => <span {...p} /> : p => <div {...p} />;
   return (
-    <Ele
+    <Text
       className={props.className}
       style={{
+        fontSize: 20,
+        color: TextPrimaryColor,
         ...props.style
       }}
     >
       {props.children}
-    </Ele>
+    </Text>
   );
 }

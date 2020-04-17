@@ -8,7 +8,7 @@ import { Flex } from '../Flex';
 
 export function RichEditorBlock() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const onChange = (editorState) => setEditorState(editorState);
+  const onChange = editorState => setEditorState(editorState);
   return (
     <Flex alignCenter className="RichEditorBlock-root">
       <div className="RichEditorBlock-operation">
