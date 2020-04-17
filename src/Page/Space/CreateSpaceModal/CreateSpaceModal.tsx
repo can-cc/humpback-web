@@ -3,36 +3,42 @@ import {
   Modal,
   ModalHeader,
   ModalFooter,
-  ModalContent
+  ModalContent,
 } from '../../../Component/Modal/Modal';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Input } from '../../../Component/Form/Input';
 import { Button } from '../../../Component/Button/Button';
 import { FormField } from '../../../Component/Form/FormField';
+import { FormErrorMessage } from '../../../Component/Form/FormErrorMessage';
+import { useDispatch } from 'react-redux';
+import { CreateSpaceRequest } from '../../../redux/action/space-action';
 
 interface FormValues {
   name: string;
 }
 
 const validationSchema = Yup.object({
-  name: Yup.string()
-    .max(15, '不能超过15个字符')
-    .required('请填写空间名称')
+  name: Yup.string().max(15, '不能超过15个字符').required('请填写空间名称'),
 });
 
 export function CreateSpaceModal(props: {
   isOpen: boolean;
   onClose: () => void;
 }) {
+  const dispatch: Function = useDispatch();
+  const createSpace = (values: FormValues): Promise<void> => {
+    return dispatch(CreateSpaceRequest(values));
+  };
+
   return (
     <Modal
       className="CreateSpaceModal"
       isOpen={props.isOpen}
       style={{
         content: {
-          width: 480
-        }
+          width: 480,
+        },
       }}
       onRequestClose={props.onClose}
     >
@@ -42,35 +48,40 @@ export function CreateSpaceModal(props: {
         initialValues={{ name: '' }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          createSpace(values)
+            .then(() => {
+              setSubmitting(false);
+              alert('success');
+            })
+            .catch(() => {
+              setSubmitting(false);
+              alert('failure');
+            });
         }}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, isValid, touched }) => (
           <Form>
             <ModalContent
               style={{
-                minHeight: 120
+                minHeight: 120,
               }}
             >
               <FormField name="空间名称">
-                <Field type="text" as={Input} name="name" />
-                <ErrorMessage name="name" component="div" />
+                <Field type="text" as={Input} name="name" autoFocus />
+                <ErrorMessage name="name" component={FormErrorMessage} />
               </FormField>
             </ModalContent>
 
             <ModalFooter>
               <div
                 style={{
-                  textAlign: 'right'
+                  textAlign: 'right',
                 }}
               >
                 <Button
                   type="primary"
                   htmlType="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !isValid}
                 >
                   创建
                 </Button>

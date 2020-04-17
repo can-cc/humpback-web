@@ -2,12 +2,15 @@ import React, {
   CSSProperties,
   SyntheticEvent,
   ReactNode,
-  MutableRefObject
+  MutableRefObject,
 } from 'react';
 import {
   ColorPrimary,
   ColorPrimaryoOpposite,
-  ColorPrimaryHover
+  ColorPrimaryHover,
+  ColorLink,
+  ColorDisable,
+  TextSecondaryColor,
 } from '../../Constant/Color';
 import { buildClassName } from '../../util/component';
 import { useHover } from '../../hook/hoverHook';
@@ -34,17 +37,20 @@ interface Props {
 const typeStyles = {
   primary: {
     backgroundColor: ColorPrimary,
-    color: ColorPrimaryoOpposite
+    color: ColorPrimaryoOpposite,
   },
   link: {
-    color: ColorPrimaryoOpposite
-  }
+    color: ColorLink,
+  },
 };
 
-const typeHoverStyles = {
+const typeHoverStyles: { [name: string]: CSSProperties } = {
   primary: {
-    backgroundColor: ColorPrimaryHover
-  }
+    backgroundColor: ColorPrimaryHover,
+  },
+  link: {
+    textDecoration: 'underline',
+  },
 };
 
 const sizeStyles = {
@@ -53,8 +59,8 @@ const sizeStyles = {
     height: 32,
     lineHeight: '31px',
     fontSize: 16,
-    borderRadius: 6
-  }
+    borderRadius: 6,
+  },
 };
 
 export function Button({
@@ -66,7 +72,7 @@ export function Button({
   className,
   disabled,
   style,
-  backgroundColor = 'transparent'
+  backgroundColor = 'transparent',
 }: Props) {
   const allClassName = buildClassName(['Button', type, className]);
   const [hoverRef, isHovered] = useHover();
@@ -85,7 +91,11 @@ export function Button({
         ...typeStyles[type],
         ...hoverStyle,
         ...sizeStyles[size],
-        ...style
+        ...( disabled ? {
+          backgroundColor: ColorDisable,
+          color: TextSecondaryColor
+        }: {}),
+        ...style,
       }}
       className={allClassName}
       type={htmlType}

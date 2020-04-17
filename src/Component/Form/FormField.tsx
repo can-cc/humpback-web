@@ -20,7 +20,9 @@ export function FormField({
   require = false
 }: InputProps) {
   return (
-    <div className={`FormField ${className}`}>
+    <div className={`FormField ${className}`} style={{
+        verticalAlign: 'center'
+    }}>
       {name && (
         <span
           className={`FormField--name`}
