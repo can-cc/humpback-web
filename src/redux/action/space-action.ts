@@ -14,3 +14,17 @@ export function CreateSpaceRequest(payload: CreateSpacePayload) {
     },
   };
 }
+
+export interface GetSpaceListPayload {}
+
+export function GetSpaceListRequest(payload: GetSpaceListPayload) {
+  return {
+    type: 'GET_SPACE_LIST',
+    payload: {
+      request: {
+        url: `/spaces`,
+        withCredentials: true
+      },
+    },
+  };
+}

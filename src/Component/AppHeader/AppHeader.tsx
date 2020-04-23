@@ -11,12 +11,14 @@ import { SpaceDropDownOverlay } from './SpaceDropDownOverlay';
 import { CreateSpaceModal } from '../../Page/Space/CreateSpaceModal/CreateSpaceModal';
 
 import './AppHeader.css';
+import { useDispatch } from 'react-redux';
+import { GetSpaceListRequest } from '../../redux/action/space-action';
 
 export const AppHeaderHeight = 42;
 
 const mockSpaces: SpaceDisplay[] = [
   { id: '1', name: '猕猴桃空间' },
-  { id: '2', name: '秦朝城市规划研究' }
+  { id: '2', name: '秦朝城市规划研究' },
 ];
 
 function AppHeaderLink(props: { text: string; dropDownOverlay?: ReactNode }) {
@@ -33,9 +35,9 @@ function AppHeaderLink(props: { text: string; dropDownOverlay?: ReactNode }) {
               alignItems: 'center',
               ...(toggle
                 ? {
-                    backgroundColor: '#687cf1'
+                    backgroundColor: '#687cf1',
                   }
-                : {})
+                : {}),
             }}
           >
             <Text>{props.text}</Text>
@@ -44,7 +46,7 @@ function AppHeaderLink(props: { text: string; dropDownOverlay?: ReactNode }) {
               icon={faChevronDown}
               style={{
                 marginTop: 2,
-                marginLeft: 3
+                marginLeft: 3,
               }}
             />
           </div>
@@ -56,11 +58,16 @@ function AppHeaderLink(props: { text: string; dropDownOverlay?: ReactNode }) {
 }
 
 export function AppHeader() {
+  const dispatch = useDispatch();
   const [createSpaceModalVisible, setCreateSpaceModalVisible] = useState(false);
 
-  // useEffect(() => {
-  //   setCreateSpaceModalVisible(true);
-  // }, []);
+  useEffect(() => {
+    const querySpaces = () => {
+      dispatch(GetSpaceListRequest({}));
+    };
+    // setCreateSpaceModalVisible(true);
+    querySpaces();
+  }, [dispatch]);
 
   return (
     <>
@@ -70,18 +77,18 @@ export function AppHeader() {
           color: 'white',
           height: AppHeaderHeight,
           display: 'flex',
-          paddingLeft: 12
+          paddingLeft: 12,
         }}
       >
         <Humpback
           style={{
-            marginRight: 12
+            marginRight: 12,
           }}
         />
         <List
           style={{
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
           }}
         >
           <AppHeaderLink
