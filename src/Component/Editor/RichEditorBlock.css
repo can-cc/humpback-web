@@ -3,6 +3,7 @@
   padding: 15px;
   text-align: left;
   background-color: #f8f8f8;
+  align-items: flex-start !important;
 }
 
 .RichEditorBlock-root:hover .RichEditorBlock-operation {

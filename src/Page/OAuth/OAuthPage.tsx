@@ -1,13 +1,5 @@
 import React, { useEffect } from 'react';
-import Axios, { AxiosError } from 'axios';
-import { faWindowRestore } from '@fortawesome/free-solid-svg-icons';
 
-// Axios.interceptors.response.use((response) => {
-//     return response;
-// }, function (error) {
-//     console.log(error)
-//     return Promise.reject(error.response);
-// });
 
 export function OAuthPage() {
   useEffect(() => {
