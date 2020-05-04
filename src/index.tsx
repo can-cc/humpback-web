@@ -9,13 +9,6 @@ import * as serviceWorker from './serviceWorker';
 import './index.css';
 import { store } from './redux/store';
 
-// Check api base url
-if (!process.env.REACT_APP_API_URL) {
-  throw new Error('Must set the REACT_APP_API_URL environment variables');
-} else {
-  console.log(`Api base url is ${process.env.REACT_APP_API_URL}`);
-}
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

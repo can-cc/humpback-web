@@ -51,11 +51,9 @@ export function CreateSpaceModal(props: {
           createSpace(values)
             .then(() => {
               setSubmitting(false);
-              alert('success');
             })
             .catch(() => {
               setSubmitting(false);
-              alert('failure');
             });
         }}
       >

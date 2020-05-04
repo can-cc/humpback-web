@@ -13,6 +13,8 @@
 .RichEditorBlock-operation {
   visibility: hidden;
   margin-right: 6px;
+  flex-shrink: 0;
+  flex-grow: 0;
 }
 
 .RichEditorBlock-operation .IconButton {
@@ -21,6 +23,7 @@
 
 .RichEditorBlock-root .DraftEditor-root {
   position: relative;
+  flex-grow: 10;
 }
 
 .RichEditorBlock-root .public-DraftEditorPlaceholder-root {
@@ -37,6 +40,7 @@
   position: relative;
   z-index: 10;
   padding: 3px 0;
+  word-break: break-all;
   /* position: absolute;
   top: 0;
   left: 0;
