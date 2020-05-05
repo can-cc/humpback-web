@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, CSSProperties } from 'react';
+import React, { CSSProperties, InputHTMLAttributes } from 'react';
 import omit from 'lodash/omit';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -14,7 +14,7 @@ export function Input(props: InputProps) {
     border: '1px solid #e8e8e8',
     width: props.block ? '100%' : 'initial',
     boxSizing: 'border-box',
-    ...props.style
+    ...props.style,
   };
 
   return <input style={style} {...omit(props, ['style', 'block'])} />;

@@ -1,16 +1,11 @@
 import React from 'react';
-import {
-  Modal,
-  ModalHeader,
-  ModalFooter,
-  ModalContent,
-} from '../../../Component/Modal/Modal';
+import { Modal, ModalContent, ModalFooter, ModalHeader } from '../Modal';
 import * as Yup from 'yup';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { Input } from '../../../Component/Form/Input';
-import { Button } from '../../../Component/Button/Button';
-import { FormField } from '../../../Component/Form/FormField';
-import { FormErrorMessage } from '../../../Component/Form/FormErrorMessage';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Input } from '../../Form/Input';
+import { Button } from '../../Button/Button';
+import { FormField } from '../../Form/FormField';
+import { FormErrorMessage } from '../../Form/FormErrorMessage';
 import { useDispatch } from 'react-redux';
 import { CreateSpaceRequest } from '../../../redux/action/space-action';
 
@@ -19,13 +14,12 @@ interface FormValues {
 }
 
 const validationSchema = Yup.object({
-  name: Yup.string().max(15, '不能超过15个字符').required('请填写空间名称'),
+  name: Yup.string()
+    .max(15, '不能超过15个字符')
+    .required('请填写空间名称')
 });
 
-export function CreateSpaceModal(props: {
-  isOpen: boolean;
-  onClose: () => void;
-}) {
+export function CreateSpaceModal(props: { isOpen: boolean; onClose: () => void }) {
   const dispatch: Function = useDispatch();
   const createSpace = (values: FormValues): Promise<void> => {
     return dispatch(CreateSpaceRequest(values));
@@ -37,8 +31,8 @@ export function CreateSpaceModal(props: {
       isOpen={props.isOpen}
       style={{
         content: {
-          width: 480,
-        },
+          width: 480
+        }
       }}
       onRequestClose={props.onClose}
     >
@@ -61,7 +55,7 @@ export function CreateSpaceModal(props: {
           <Form>
             <ModalContent
               style={{
-                minHeight: 120,
+                minHeight: 120
               }}
             >
               <FormField name="空间名称">
@@ -73,14 +67,10 @@ export function CreateSpaceModal(props: {
             <ModalFooter>
               <div
                 style={{
-                  textAlign: 'right',
+                  textAlign: 'right'
                 }}
               >
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  disabled={isSubmitting || !isValid}
-                >
+                <Button type="primary" htmlType="submit" disabled={isSubmitting || !isValid}>
                   创建
                 </Button>
                 <Button type="link" onClick={props.onClose}>

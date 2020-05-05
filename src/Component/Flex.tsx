@@ -1,11 +1,6 @@
 import React, { CSSProperties, ReactNode } from 'react';
 
-export function Flex(props: {
-  children: ReactNode;
-  className?: string;
-  style?: CSSProperties;
-  alignCenter?: boolean;
-}) {
+export function Flex(props: { children: ReactNode; className?: string; style?: CSSProperties; alignCenter?: boolean }) {
   return (
     <div
       className={props.className}
@@ -13,10 +8,10 @@ export function Flex(props: {
         display: 'flex',
         ...(props.alignCenter
           ? {
-              alignItems: 'center'
+              alignItems: 'center',
             }
           : {}),
-        ...props.style
+        ...props.style,
       }}
     >
       {props.children}

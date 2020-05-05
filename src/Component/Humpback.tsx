@@ -7,7 +7,7 @@ export function Humpback(props: { style?: CSSProperties }) {
       alt="humpback"
       style={{
         width: 120,
-        ...props.style
+        ...props.style,
       }}
     />
   );

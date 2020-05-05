@@ -1,12 +1,8 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { SpacePage } from '../Page/Space/SpacePage';
 import { AppHeader } from '../Component/AppHeader/AppHeader';
+import { SpaceListPage } from '../Page/SpaceList/SpaceListPage';
 
 export function MainRouter() {
   return (
@@ -14,8 +10,9 @@ export function MainRouter() {
       <AppHeader />
       <Router>
         <Switch>
-          <Route path="/space" component={SpacePage} />
-          <Route path="*" component={() => <Redirect to="/space" />} />
+          <Route path="/spaces" component={SpaceListPage} />
+          <Route path="/space/:spaceId" component={SpacePage} />
+          <Route path="*" component={() => <Redirect to="/spaces" />} />
         </Switch>
       </Router>
     </>

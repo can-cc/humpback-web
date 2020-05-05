@@ -1,26 +1,16 @@
-import React, {
-  CSSProperties,
-  SyntheticEvent,
-  ReactNode,
-  MutableRefObject,
-} from 'react';
+import React, { CSSProperties, MutableRefObject, ReactNode, SyntheticEvent } from 'react';
 import {
-  ColorPrimary,
-  ColorPrimaryoOpposite,
-  ColorPrimaryHover,
-  ColorLink,
   ColorDisable,
-  TextSecondaryColor,
+  ColorLink,
+  ColorPrimary,
+  ColorPrimaryHover,
+  ColorPrimaryoOpposite,
+  TextSecondaryColor
 } from '../../Constant/Color';
 import { buildClassName } from '../../util/component';
 import { useHover } from '../../hook/hoverHook';
 
-export type ButtonType =
-  | 'primary'
-  | 'secondary'
-  | 'danger'
-  | 'link'
-  | 'default';
+export type ButtonType = 'primary' | 'secondary' | 'danger' | 'link' | 'default';
 
 interface Props {
   children: ReactNode;
@@ -37,20 +27,20 @@ interface Props {
 const typeStyles = {
   primary: {
     backgroundColor: ColorPrimary,
-    color: ColorPrimaryoOpposite,
+    color: ColorPrimaryoOpposite
   },
   link: {
-    color: ColorLink,
-  },
+    color: ColorLink
+  }
 };
 
 const typeHoverStyles: { [name: string]: CSSProperties } = {
   primary: {
-    backgroundColor: ColorPrimaryHover,
+    backgroundColor: ColorPrimaryHover
   },
   link: {
-    textDecoration: 'underline',
-  },
+    textDecoration: 'underline'
+  }
 };
 
 const sizeStyles = {
@@ -59,8 +49,8 @@ const sizeStyles = {
     height: 32,
     lineHeight: '31px',
     fontSize: 16,
-    borderRadius: 6,
-  },
+    borderRadius: 6
+  }
 };
 
 export function Button({
@@ -72,7 +62,7 @@ export function Button({
   className,
   disabled,
   style,
-  backgroundColor = 'transparent',
+  backgroundColor = 'transparent'
 }: Props) {
   const allClassName = buildClassName(['Button', type, className]);
   const [hoverRef, isHovered] = useHover();
@@ -91,11 +81,13 @@ export function Button({
         ...typeStyles[type],
         ...hoverStyle,
         ...sizeStyles[size],
-        ...( disabled ? {
-          backgroundColor: ColorDisable,
-          color: TextSecondaryColor
-        }: {}),
-        ...style,
+        ...(disabled
+          ? {
+              backgroundColor: ColorDisable,
+              color: TextSecondaryColor
+            }
+          : {}),
+        ...style
       }}
       className={allClassName}
       type={htmlType}

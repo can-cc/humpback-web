@@ -1,9 +1,9 @@
 import React from 'react';
 import { Flex } from '../../../../Component/Flex';
 import { Bold } from '../../../../Component/Bold';
-import { SpaceDisplay } from '../../../../interface/space';
+import { ISpace } from '../../../../domain/space';
 
-export function SpaceInfo(props: { space: SpaceDisplay }) {
+export function SpaceInfo(props: { space: ISpace }) {
   return (
     <Flex
       alignCenter

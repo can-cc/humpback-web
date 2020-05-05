@@ -7,7 +7,7 @@ function App() {
       style={{
         display: 'flex',
         height: '100%',
-        flexDirection: 'column'
+        flexDirection: 'column',
       }}
       className="App"
     >

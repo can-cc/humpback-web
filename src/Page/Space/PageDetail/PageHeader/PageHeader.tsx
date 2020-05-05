@@ -1,6 +1,6 @@
 import React from 'react';
-import { SpaceDisplay } from '../../../../interface/space';
+import { ISpace } from '../../../../domain/space';
 
-export function PageHeader(props: { space: SpaceDisplay }) {
+export function PageHeader(props: { space: ISpace }) {
   return <div>{props.space.name}</div>;
 }

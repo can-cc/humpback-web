@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Editor, EditorState, DraftHandleValue, ContentState } from 'draft-js';
+import React, { useEffect, useRef, useState } from 'react';
+import { ContentState, DraftHandleValue, Editor, EditorState } from 'draft-js';
 import { IconButton } from '../Button/IconButton';
-import { faPlus, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Flex } from '../Flex';
 
 import './RichEditorBlock.css';
@@ -13,9 +13,7 @@ export function RichEditorBlock(props: {
   onChange: (content: string) => void;
 }) {
   const [editorState, setEditorState] = useState(
-    EditorState.createWithContent(
-      ContentState.createFromText(props.initContent)
-    )
+    EditorState.createWithContent(ContentState.createFromText(props.initContent))
   );
   const onChange = editorState => {
     setEditorState(editorState);
@@ -23,10 +21,7 @@ export function RichEditorBlock(props: {
   };
   const editorRef = useRef(null);
 
-  const handleReturn = (
-    e: React.KeyboardEvent<{}>,
-    editorState: EditorState
-  ): DraftHandleValue => {
+  const handleReturn = (e: React.KeyboardEvent<{}>, editorState: EditorState): DraftHandleValue => {
     editorRef.current.blur();
     e.preventDefault();
     props.handleReturn();

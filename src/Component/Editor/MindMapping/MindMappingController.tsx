@@ -396,9 +396,7 @@ export function generateD3Node(svgArea: any): any {
     if (d.x < x0) x0 = d.x;
   });
 
-  const svg = d3
-    .select(svgArea)
-    .attr('viewBox', [0, 0, width, x1 - x0 + root.dx * 2]);
+  const svg = d3.select(svgArea).attr('viewBox', [0, 0, width, x1 - x0 + root.dx * 2]);
 
   const g = svg
     .append('g')

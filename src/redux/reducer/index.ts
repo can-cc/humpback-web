@@ -1,3 +1,10 @@
 import { combineReducers } from 'redux';
+import { SpaceReducer, SpaceState } from './space-reducer';
 
-export const rootReducer = combineReducers({});
+export interface AppRootState {
+  space: SpaceState;
+}
+
+export const rootReducer = combineReducers({
+  space: SpaceReducer,
+});

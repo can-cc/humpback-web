@@ -1,13 +1,10 @@
 import React from 'react';
-import { List, ListSection, ListItem } from '../List/List';
+import { List, ListItem, ListSection } from '../List/List';
 import { DropDownOverlay } from '../DropDown/DropDownOverlay';
-import { SpaceDisplay } from '../../interface/space';
+import { ISpace } from '../../domain/space';
 import { Divider } from '../Divider';
 
-export function SpaceDropDownOverlay(props: {
-  spaces: SpaceDisplay[];
-  openCreateSpaceModal: () => void;
-}) {
+export function SpaceDropDownOverlay(props: { spaces: ISpace[]; openCreateSpaceModal: () => void }) {
   return (
     <DropDownOverlay style={{ color: 'black' }}>
       <List>

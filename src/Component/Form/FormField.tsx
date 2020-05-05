@@ -11,24 +11,20 @@ interface InputProps {
   require?: boolean;
 }
 
-export function FormField({
-  name,
-  icon,
-  children,
-  className = '',
-  type = 'inline',
-  require = false
-}: InputProps) {
+export function FormField({ name, icon, children, className = '', type = 'inline', require = false }: InputProps) {
   return (
-    <div className={`FormField ${className}`} style={{
-        verticalAlign: 'center'
-    }}>
+    <div
+      className={`FormField ${className}`}
+      style={{
+        verticalAlign: 'center',
+      }}
+    >
       {name && (
         <span
           className={`FormField--name`}
           style={{
             marginRight: 12,
-            color: TextSecondaryColor
+            color: TextSecondaryColor,
           }}
         >
           {name}

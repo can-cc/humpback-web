@@ -1,9 +1,6 @@
 import React, { CSSProperties, ReactNode } from 'react';
 
-export function _ModalContent(props: {
-  style?: CSSProperties;
-  children: ReactNode;
-}) {
+export function _ModalContent(props: { style?: CSSProperties; children: ReactNode }) {
   return (
     <div
       style={{

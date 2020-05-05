@@ -9,29 +9,20 @@ export function CreateSpaceRequest(payload: CreateSpacePayload) {
       request: {
         url: `/space`,
         method: 'post',
-        withCredentials: true,
         data: payload,
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
       },
     },
   };
 }
 
-export interface GetSpaceListPayload {}
+export interface QuerySpaceListPayload {}
 
-export function GetSpaceListRequest(payload: GetSpaceListPayload) {
+export function QuerySpaceListRequest(payload: QuerySpaceListPayload) {
   return {
-    type: 'GET_SPACE_LIST',
+    type: 'QUERY_SPACE_LIST',
     payload: {
       request: {
         url: `/spaces`,
-        withCredentials: true,
-        headers: {
-          // 'X-Requested-With': 'XMLHttpRequest',
-        },
       },
     },
   };

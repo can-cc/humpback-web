@@ -1,3 +1,3 @@
 export function buildClassName(names: string[]) {
-  return names.filter(x => !!x).join(' ');
+  return names.filter((x) => !!x).join(' ');
 }

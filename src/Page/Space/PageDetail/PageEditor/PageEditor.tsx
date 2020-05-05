@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RichEditorBlock } from '../../../../Component/Editor/RichEditorBlock';
-import { EditorUnit } from "./EditorUnit";
-
-
+import { EditorUnit } from './EditorUnit';
 
 export function PageEditor() {
   const [editorUnits, setEditorUnits] = useState<EditorUnit[]>([]);
@@ -13,7 +11,7 @@ export function PageEditor() {
 
   const appendEditorUnit = (lastUnitId: string) => {
     const newUnits: EditorUnit[] = [...editorUnits];
-    const lastIndex = newUnits.findIndex((u) => u.getId() === lastUnitId);
+    const lastIndex = newUnits.findIndex(u => u.getId() === lastUnitId);
     if (lastIndex < 0) {
       return;
     }
@@ -25,7 +23,7 @@ export function PageEditor() {
     <div
       className="PageEditor"
       style={{
-        width: '100%',
+        width: '100%'
       }}
     >
       {editorUnits.map((editorUnit: EditorUnit) => {
@@ -34,7 +32,7 @@ export function PageEditor() {
             key={editorUnit.getId()}
             isNew={editorUnit.getIsNew()}
             initContent={editorUnit.getContent()}
-            onChange={(content) => {
+            onChange={content => {
               editorUnit.setContent(content);
             }}
             handleReturn={() => {

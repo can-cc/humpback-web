@@ -5,16 +5,16 @@ module.exports = function(app) {
     createProxyMiddleware({
       target: 'http://localhost:8080/',
       pathRewrite: {
-        '^/api': '',
+        '^/api': ''
       },
-      changeOrigin: true,
+      changeOrigin: true
     })
   );
   app.use(
     '/oauth2',
     createProxyMiddleware({
       target: 'http://localhost:8080/',
-      changeOrigin: true,
+      changeOrigin: true
     })
   );
 };

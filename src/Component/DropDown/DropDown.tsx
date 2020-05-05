@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
 function DropDownToggle({ onClick, children, toggled }) {
   return (
@@ -37,12 +37,7 @@ interface DropDownProps {
   position?: 'center' | 'right';
 }
 
-export function AppDropDown({
-  toggle,
-  overlay,
-  className = '',
-  position = 'center'
-}: DropDownProps) {
+export function AppDropDown({ toggle, overlay, className = '', position = 'center' }: DropDownProps) {
   const [show, setShow] = useState(false);
 
   const checkClickInOverlay = (element: HTMLElement): boolean => {
@@ -52,11 +47,7 @@ export function AppDropDown({
     if (element === window.document.body) {
       return false;
     }
-    if (
-      element.className &&
-      element.className.indexOf &&
-      element.className.indexOf('DropDownOverlay') >= 0
-    ) {
+    if (element.className && element.className.indexOf && element.className.indexOf('DropDownOverlay') >= 0) {
       return true;
     }
     return checkClickInOverlay(element.parentElement);

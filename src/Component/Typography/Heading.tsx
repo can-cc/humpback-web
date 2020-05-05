@@ -1,12 +1,8 @@
-import React, { ReactNode, CSSProperties } from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 import { Text } from '../Text';
 import { TextPrimaryColor } from '../../Constant/Color';
 
-export function Heading(props: {
-  children: ReactNode;
-  style?: CSSProperties;
-  className?: string;
-}) {
+export function Heading(props: { children: ReactNode; style?: CSSProperties; className?: string }) {
   return (
     <Text
       className={props.className}

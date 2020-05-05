@@ -5,11 +5,11 @@
         "options": {
           "parser": "typescript",
           "singleQuote": true,
-          "printWidth": 80
+          "printWidth": 120
         }
       },
       {
-        "files": "**/*.scss",
+        "files": "**/*.css",
         "options": {
           "parser": "css"
         }
@@ -18,9 +18,8 @@
         "files": "**/*.json",
         "options": {
           "parser": "json",
-          "printWidth": 80
+          "printWidth": 120
         }
       }
     ]
   }
-  
