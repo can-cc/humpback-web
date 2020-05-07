@@ -7,24 +7,30 @@ import { Flex } from '../Flex';
 import './RichEditorBlock.css';
 
 export function RichEditorBlock(props: {
-  handleReturn: Function;
+  handleReturn: (content: string) => void;
   isNew: boolean;
   initContent: string;
+  onBlur: () => void;
   onChange: (content: string) => void;
 }) {
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(ContentState.createFromText(props.initContent))
   );
-  const onChange = editorState => {
+  const onChange = (editorState) => {
     setEditorState(editorState);
     props.onChange(editorState.getCurrentContent().getPlainText());
   };
+
+  const onBlur = (editorState) => {
+    props.onBlur();
+  };
+
   const editorRef = useRef(null);
 
   const handleReturn = (e: React.KeyboardEvent<{}>, editorState: EditorState): DraftHandleValue => {
     editorRef.current.blur();
     e.preventDefault();
-    props.handleReturn();
+    props.handleReturn(editorState.getCurrentContent().getPlainText());
     return 'handled';
   };
 
@@ -46,6 +52,7 @@ export function RichEditorBlock(props: {
         placeholder="Typing here."
         editorState={editorState}
         onChange={onChange}
+        onBlur={onBlur}
         handleReturn={handleReturn}
       />
     </Flex>

@@ -14,12 +14,20 @@ export class EditorUnit {
     return this.id;
   }
 
+  public setId(id: string) {
+    this.id = id;
+  }
+
   public getContent() {
     return this.content;
   }
 
   public setContent(content: string) {
-    return (this.content = content);
+    this.content = content;
+  }
+
+  public setIsNew(isNew: boolean) {
+    this.isNew = isNew;
   }
 
   public getIsNew() {

@@ -18,7 +18,7 @@ export function IconButton(props: {
         borderRadius: 3,
         padding: '3px 5px',
         color: '#888',
-        verticalAlign: 'middle'
+        verticalAlign: 'middle',
       }}
       onClick={props.onClick}
     >
@@ -26,7 +26,7 @@ export function IconButton(props: {
         size={props.iconSize || 'lg'}
         icon={props.icon}
         style={{
-          ...props.iconStyle
+          ...props.iconStyle,
         }}
       />
     </button>

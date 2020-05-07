@@ -7,12 +7,18 @@ import { useSelector } from 'react-redux';
 import { AppRootState } from '../../../redux/reducer';
 import { selectSpaceById } from '../../../redux/selector/space-selector';
 import { selectPageList } from '../../../redux/selector/page-selector';
+import { appHistory } from '../../../common/history';
+import { IPage } from '../../../domain/page';
 
-export function SpaceSide() {
+export function SpaceSide(props: { selectPageId?: string }) {
   const params = useParams<{ spaceId: string }>();
   const spaceId = params.spaceId;
   const space = useSelector((state: AppRootState) => selectSpaceById(state, spaceId));
   const pages = useSelector((state: AppRootState) => selectPageList(state, spaceId)) || [];
+
+  const onPageClick = (page: IPage) => {
+    appHistory.push(`/space/${spaceId}?pageId=${page.id}`);
+  };
   return (
     <aside
       style={{
@@ -24,8 +30,10 @@ export function SpaceSide() {
       <SpaceInfo space={space} />
       <List>
         <ListSection>
-          {pages.map((space) => (
-            <ListItem key={space.id}>{space.name || '未命名页面'}</ListItem>
+          {pages.map((page) => (
+            <ListItem active={props.selectPageId === page.id} key={page.id} onClick={() => onPageClick(page)}>
+              {page.title || '未命名页面'}
+            </ListItem>
           ))}
         </ListSection>
       </List>

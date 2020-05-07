@@ -37,18 +37,18 @@ export function AppHeader() {
           color: 'white',
           height: AppHeaderHeight,
           display: 'flex',
-          paddingLeft: 12
+          paddingLeft: 12,
         }}
       >
         <Humpback
           style={{
-            marginRight: 12
+            marginRight: 12,
           }}
         />
         <List
           style={{
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
           }}
         >
           <AppHeaderLink

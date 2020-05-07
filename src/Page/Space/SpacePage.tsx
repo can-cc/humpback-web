@@ -7,10 +7,14 @@ import { useParams } from 'react-router-dom';
 import { QueryPageListRequest } from '../../redux/action/page-action';
 import { AppRootState } from '../../redux/reducer';
 import { selectSpaceById } from '../../redux/selector/space-selector';
+import { appHistory } from '../../common/history';
 
 export function SpacePage() {
   const params = useParams<{ spaceId: string }>();
   const spaceId = params.spaceId;
+
+  const searchParams = new URLSearchParams(appHistory.location.search);
+  const selectPageId = searchParams.get('pageId');
   const dispatch = useDispatch();
   const queryPageList = () =>
     dispatch(
@@ -36,8 +40,8 @@ export function SpacePage() {
         height: '100%',
       }}
     >
-      <SpaceSide />
-      <PageDetail />
+      <SpaceSide selectPageId={selectPageId} />
+      <PageDetail selectPageId={selectPageId} />
     </Flex>
   );
 }

@@ -6,7 +6,7 @@ function DropDownToggle({ onClick, children, toggled }) {
       className="DropDownToggle"
       style={{
         userSelect: 'none',
-        cursor: 'pointer'
+        cursor: 'pointer',
       }}
       onClick={onClick}
     >
@@ -21,7 +21,7 @@ function DropDownOverlay({ children }) {
       style={{
         position: 'absolute',
         minWidth: 180,
-        top: 'calc(100% + 6px)'
+        top: 'calc(100% + 6px)',
       }}
       className="DropDownOverlay"
     >
@@ -74,7 +74,7 @@ export function AppDropDown({ toggle, overlay, className = '', position = 'cente
   return (
     <div
       style={{
-        position: 'relative'
+        position: 'relative',
       }}
       className={`AppDropDown ${className} ${position}`}
     >

@@ -10,7 +10,7 @@ export function SpaceSideFooter(props: { space: ISpace }) {
     dispatch(
       CreatPageRequest({
         spaceId: props.space.id,
-        title: ''
+        title: '',
       })
     );
   };

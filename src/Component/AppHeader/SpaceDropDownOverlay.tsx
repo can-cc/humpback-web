@@ -9,7 +9,7 @@ export function SpaceDropDownOverlay(props: { spaces: ISpace[]; openCreateSpaceM
     <DropDownOverlay style={{ color: 'black' }}>
       <List>
         <ListSection>
-          {props.spaces.map(space => (
+          {props.spaces.map((space) => (
             <ListItem key={space.id}>{space.name}</ListItem>
           ))}
         </ListSection>

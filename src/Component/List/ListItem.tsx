@@ -4,12 +4,17 @@ const clickableStyle: CSSProperties = {
   cursor: 'pointer',
 };
 
-export function _ListItem(props: { children: ReactNode; onClick?: () => void }) {
+const activeStyle: CSSProperties = {
+  fontWeight: 'bolder',
+};
+
+export function _ListItem(props: { children: ReactNode; onClick?: () => void; active?: boolean }) {
   return (
     <li
       style={{
         fontSize: 14,
         ...(!!props.onClick ? clickableStyle : {}),
+        ...(props.active ? activeStyle : {}),
       }}
       onClick={props.onClick}
     >

@@ -18,7 +18,7 @@ export const _ModalHeader = ({ title, onClose, children }: InputProps) => {
         padding: '12px',
         borderBottom: '2px solid #ebecf0',
         display: 'flex',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
       }}
     >
       <Heading>{title}</Heading>

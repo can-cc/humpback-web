@@ -34,6 +34,7 @@
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
     "redux-axios-middleware": "^4.0.1",
+    "rxjs": "^6.5.5",
     "typescript": "^3.7.5",
     "uuid": "^7.0.3",
     "yup": "^0.28.3"

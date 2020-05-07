@@ -1,8 +1,8 @@
 import { AppAction, AxiosSuccessAction } from '../action/action';
 import { normalize } from 'normalizr';
-import { SpaceListSchema, SpaceSchema } from '../normalizr';
+import { PageSchema, SpaceListSchema, SpaceSchema } from '../normalizr';
 import { ISpace } from '../../domain/space';
-import { IPage } from '../../domain/page';
+import { IPage, IPageBlock } from '../../domain/page';
 import { AppLogger } from '../../util/logger';
 import { buildStateWorker } from './reducer-util';
 import { NormalizedEntities } from './interface';
@@ -11,12 +11,14 @@ export interface SpaceState {
   spaces: string[];
   spaceEntities: NormalizedEntities<ISpace>;
   pageEntities: NormalizedEntities<IPage>;
+  pageBlockEntities: NormalizedEntities<IPageBlock>;
 }
 
 const defaultSpaceState = {
   spaces: [],
   spaceEntities: {},
   pageEntities: {},
+  pageBlockEntities: {},
 };
 
 function mergeSpaceInState(space: ISpace) {
@@ -34,12 +36,44 @@ function mergeSpaceInState(space: ISpace) {
   };
 }
 
+function mergePageInState(page: IPage) {
+  return function (state: SpaceState): SpaceState {
+    return {
+      ...state,
+      pageEntities: {
+        ...state.pageEntities,
+        [page.id]: {
+          ...state.pageEntities[page.id],
+          ...page,
+        },
+      },
+    };
+  };
+}
+
 function reduceSpaceList(state: SpaceState, action: AxiosSuccessAction): SpaceState {
   const normalizedData = normalize<ISpace>(action.payload.data, SpaceListSchema);
   return {
     ...state,
     spaces: normalizedData.result,
     spaceEntities: normalizedData.entities.spaces,
+  };
+}
+
+function mergePageEntities(pageEntities: NormalizedEntities<IPage>) {
+  return function (state: SpaceState): SpaceState {
+    return Object.keys(pageEntities).reduce((state: SpaceState, id: string): SpaceState => {
+      return {
+        ...state,
+        pageEntities: {
+          ...state.pageEntities,
+          [id]: {
+            ...state.pageEntities[id],
+            ...pageEntities[id],
+          },
+        },
+      };
+    }, state);
   };
 }
 
@@ -54,12 +88,20 @@ function reducePageList(state: SpaceState, action: AxiosSuccessAction): SpaceSta
   const normalizedData = normalize(spaceWithPages, SpaceSchema);
   return buildStateWorker<SpaceState>(state).pipe(
     mergeSpaceInState(normalizedData.entities.spaces[normalizedData.result]),
-    (state): SpaceState => {
+    mergePageEntities(normalizedData.entities.pages)
+  );
+}
+
+function reducePageDetail(state: SpaceState, action: AxiosSuccessAction): SpaceState {
+  const normalizedData = normalize(action.payload.data, PageSchema);
+  return buildStateWorker<SpaceState>(state).pipe(
+    mergePageInState(normalizedData.entities.pages[normalizedData.result]),
+    (state: SpaceState): SpaceState => {
       return {
         ...state,
-        pageEntities: {
-          ...state.pageEntities,
-          ...normalizedData.entities.pages,
+        pageBlockEntities: {
+          ...state.pageBlockEntities,
+          ...normalizedData.entities.blocks,
         },
       };
     }
@@ -76,6 +118,9 @@ export function SpaceReducer(
 
     case 'QUERY_PAGE_LIST_SUCCESS':
       return reducePageList(state, action as AxiosSuccessAction);
+
+    case 'QUERY_PAGE_DETAIL_SUCCESS':
+      return reducePageDetail(state, action as AxiosSuccessAction);
 
     default:
       return state;
