@@ -13,7 +13,7 @@ export function selectPageList(state: AppRootState, spaceId: string): IPage[] | 
   });
 }
 
-export function selectPage(state: AppRootState, pageId: string): IPage | IPageDetail | null {
+export function selectPage(state: AppRootState, pageId: string): IPageDetail | null {
   return denormalize(state.space.pageEntities[pageId], PageSchema, {
     pages: state.space.pageEntities,
     blocks: state.space.pageBlockEntities,

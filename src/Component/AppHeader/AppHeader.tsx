@@ -37,6 +37,7 @@ export function AppHeader() {
           color: 'white',
           height: AppHeaderHeight,
           display: 'flex',
+          flexShrink: 0,
           paddingLeft: 12,
         }}
       >

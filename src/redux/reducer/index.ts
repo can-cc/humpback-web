@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { SpaceReducer, SpaceState } from './space-reducer';
+import { SpaceReducer, SpaceState } from './space/space-reducer';
 
 export interface AppRootState {
   space: SpaceState;

@@ -38,6 +38,7 @@ export function SpacePage() {
     <Flex
       style={{
         height: '100%',
+        overflow: 'hidden',
       }}
     >
       <SpaceSide selectPageId={selectPageId} />

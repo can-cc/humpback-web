@@ -26,7 +26,7 @@ export function PageDetail(props: { selectPageId: string }) {
     return <div>nothing...</div>;
   }
   return (
-    <div style={{ width: '100%', padding: 20 }}>
+    <div style={{ width: '100%', padding: 20, overflow: 'auto' }}>
       <PageHeader page={page} />
       <PageEditor spaceId={spaceId} pageId={props.selectPageId} />
     </div>

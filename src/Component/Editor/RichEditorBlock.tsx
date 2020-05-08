@@ -5,24 +5,35 @@ import { faEllipsisV, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Flex } from '../Flex';
 
 import './RichEditorBlock.css';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 export function RichEditorBlock(props: {
   handleReturn: (content: string) => void;
   isNew: boolean;
   initContent: string;
-  onBlur: () => void;
-  onChange: (content: string) => void;
+  onBlur?: () => void;
+  onChange?: (content: string) => void;
+  changeDebounceTime?: number;
+  onChangeDebounce?: (content: string) => void;
 }) {
+  const changeRef$ = useRef(new Subject<EditorState>());
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(ContentState.createFromText(props.initContent))
   );
-  const onChange = (editorState) => {
-    setEditorState(editorState);
-    props.onChange(editorState.getCurrentContent().getPlainText());
+  const onChange = (changedEditorState) => {
+    setEditorState(changedEditorState);
+    if (editorState.getCurrentContent().getPlainText() === changedEditorState.getCurrentContent().getPlainText()) {
+      return;
+    }
+    changeRef$.current.next(changedEditorState);
+    props.onChange && props.onChange(changedEditorState.getCurrentContent().getPlainText());
   };
 
   const onBlur = (editorState) => {
-    props.onBlur();
+    if (props.onBlur) {
+      props.onBlur();
+    }
   };
 
   const editorRef = useRef(null);
@@ -38,8 +49,22 @@ export function RichEditorBlock(props: {
     if (props.isNew) {
       editorRef.current.focus();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editorRef]);
+  }, [props.isNew]);
+
+  useEffect(() => {
+    if (!props.onChangeDebounce) {
+      return;
+    }
+    const subscriber = changeRef$.current
+      .pipe(debounceTime(props.changeDebounceTime || 1300))
+      .subscribe((state: EditorState) => {
+        props.onChangeDebounce(state.getCurrentContent().getPlainText());
+      });
+    return () => {
+      subscriber.unsubscribe();
+    };
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <Flex alignCenter className="RichEditorBlock-root">
