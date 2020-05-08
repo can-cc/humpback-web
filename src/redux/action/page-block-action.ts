@@ -42,3 +42,17 @@ export function UpdatePageBlockRequest(payload: UpdatePageBlockPayload) {
     },
   };
 }
+
+export interface MovePageBlockPayload {
+  blockId: string;
+  atIndex: number;
+  pageId: string;
+}
+
+export function MovePageBlockPayload(payload: MovePageBlockPayload) {
+  return {
+    type: 'MOVE_PAGE_BLOCK',
+    meta: payload,
+    payload: {},
+  };
+}

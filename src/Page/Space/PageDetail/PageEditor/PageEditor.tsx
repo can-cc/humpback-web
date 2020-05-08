@@ -1,10 +1,17 @@
 import React from 'react';
-import { RichEditorBlock } from '../../../../Component/Editor/RichEditorBlock';
 import { useDispatch, useSelector } from 'react-redux';
 import { IPageBlock, IPageDetail } from '../../../../domain/page';
 import { selectPage } from '../../../../redux/selector/page-selector';
 import { AppRootState } from '../../../../redux/reducer';
-import { CreatePageBlockRequest, UpdatePageBlockRequest } from '../../../../redux/action/page-block-action';
+import {
+  CreatePageBlockRequest,
+  MovePageBlockPayload,
+  UpdatePageBlockRequest,
+} from '../../../../redux/action/page-block-action';
+import { EditorArrayContainer } from './EditorArrayContainer';
+import { SortableEditorBlock } from './SortableEditorBlock';
+import { DndProvider } from 'react-dnd';
+import Backend from 'react-dnd-html5-backend';
 
 export function PageEditor(props: { spaceId: string; pageId: string }) {
   const dispatch = useDispatch();
@@ -32,6 +39,16 @@ export function PageEditor(props: { spaceId: string; pageId: string }) {
     );
   };
 
+  const findBlockIndex = (id: string): number => {
+    if (!pageDetail.blocks) {
+      return -1;
+    }
+    return pageDetail.blocks.findIndex((b) => b.id === id);
+  };
+
+  const moveBlock = (blockId: string, atIndex: number) => {
+    dispatch(MovePageBlockPayload({ blockId, atIndex, pageId: props.pageId }));
+  };
   return (
     <div
       className="PageEditor"
@@ -39,22 +56,23 @@ export function PageEditor(props: { spaceId: string; pageId: string }) {
         width: '100%',
       }}
     >
-      {pageDetail.blocks &&
-        pageDetail.blocks.map((block: IPageBlock) => {
-          return (
-            <RichEditorBlock
-              key={block.id}
-              isNew={!!block.id}
-              initContent={block.content}
-              onChangeDebounce={(content) => {
-                updateBlock(block.id, content);
-              }}
-              handleReturn={() => {
-                createBlock('', block.id);
-              }}
-            />
-          );
-        })}
+      <DndProvider backend={Backend}>
+        <EditorArrayContainer>
+          {pageDetail.blocks &&
+            pageDetail.blocks.map((block: IPageBlock) => {
+              return (
+                <SortableEditorBlock
+                  key={block.id}
+                  block={block}
+                  findBlockIndex={findBlockIndex}
+                  moveBlock={moveBlock}
+                  createBlock={createBlock}
+                  updateBlock={updateBlock}
+                />
+              );
+            })}
+        </EditorArrayContainer>
+      </DndProvider>
     </div>
   );
 }

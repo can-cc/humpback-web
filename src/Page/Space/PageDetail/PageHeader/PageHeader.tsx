@@ -42,7 +42,7 @@ export function PageHeader(props: { page: IPage }) {
           }
         }}
         placeholder="未命名"
-        style={{ fontWeight: 'bold', textAlign: 'center', width: '100%', fontSize: 26 }}
+        style={{ fontWeight: 'bold', textAlign: 'center', width: '100%', fontSize: 28 }}
       />
     </div>
   );
