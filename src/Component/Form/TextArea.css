@@ -1,0 +1,4 @@
+
+.AppTextArea:focus::placeholder {
+    opacity: 0.1;
+}

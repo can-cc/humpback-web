@@ -5,30 +5,42 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 export function RichEditorBlock(props: {
-  handleReturn: (content: string) => void;
+  onReturn: (content: string) => void;
   focusInitial: boolean;
   initContent: string;
-  onBlur?: () => void;
+  onBlur?: (editorState: EditorState) => void;
+  placeholder?: string;
   onChange?: (content: string) => void;
   changeDebounceTime?: number;
   onChangeDebounce?: (content: string) => void;
 }) {
+  const {
+    onReturn,
+    focusInitial,
+    initContent,
+    onBlur,
+    placeholder,
+    onChange,
+    changeDebounceTime,
+    onChangeDebounce,
+  } = props;
+
   const changeRef$ = useRef(new Subject<EditorState>());
   const [editorState, setEditorState] = useState(
-    EditorState.createWithContent(ContentState.createFromText(props.initContent))
+    EditorState.createWithContent(ContentState.createFromText(initContent))
   );
-  const onChange = (changedEditorState) => {
+  const handleOnChange = (changedEditorState) => {
     setEditorState(changedEditorState);
     if (editorState.getCurrentContent().getPlainText() === changedEditorState.getCurrentContent().getPlainText()) {
       return;
     }
     changeRef$.current.next(changedEditorState);
-    props.onChange && props.onChange(changedEditorState.getCurrentContent().getPlainText());
+    onChange && onChange(changedEditorState.getCurrentContent().getPlainText());
   };
 
-  const onBlur = (editorState) => {
-    if (props.onBlur) {
-      props.onBlur();
+  const handleOnBlur = (editorState) => {
+    if (onBlur) {
+      onBlur(editorState);
     }
   };
 
@@ -37,39 +49,37 @@ export function RichEditorBlock(props: {
   const handleReturn = (e: React.KeyboardEvent<{}>, editorState: EditorState): DraftHandleValue => {
     editorRef.current.blur();
     e.preventDefault();
-    props.handleReturn(editorState.getCurrentContent().getPlainText());
+    onReturn(editorState.getCurrentContent().getPlainText());
     return 'handled';
   };
 
   useEffect(() => {
-    if (props.focusInitial) {
+    if (focusInitial) {
       editorRef.current.focus();
     }
-    // eslint-disable-next-line
-  }, []);
+  }, [focusInitial]);
 
   useEffect(() => {
-    if (!props.onChangeDebounce) {
+    if (!onChangeDebounce) {
       return;
     }
     const subscriber = changeRef$.current
-      .pipe(debounceTime(props.changeDebounceTime || 600))
+      .pipe(debounceTime(changeDebounceTime || 600))
       .subscribe((state: EditorState) => {
-        props.onChangeDebounce(state.getCurrentContent().getPlainText());
+        onChangeDebounce(state.getCurrentContent().getPlainText());
       });
     return () => {
       subscriber.unsubscribe();
     };
-    // eslint-disable-next-line
-  }, []);
+  }, [changeDebounceTime, onChangeDebounce]);
 
   return (
     <Editor
       ref={editorRef}
-      placeholder="请输入内容"
+      placeholder={placeholder || '请输入内容'}
       editorState={editorState}
-      onChange={onChange}
-      onBlur={onBlur}
+      onChange={handleOnChange}
+      onBlur={handleOnBlur}
       handleReturn={handleReturn}
     />
   );

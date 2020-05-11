@@ -49,30 +49,6 @@ export function reducePageListSuccess(state: SpaceState, action: AxiosSuccessAct
   );
 }
 
-export function reduceCreatePageBlock(
-  state: SpaceState,
-  action: ReturnType<typeof CreatePageBlockRequest>
-): SpaceState {
-  const page: IPageDetail = selectPage({ space: state } as AppRootState, action.meta.pageId);
-  if (!page) {
-    AppLogger.error(new Error(`select a does not exist space, space id = ${action.meta.pageId}`));
-    return state;
-  }
-  const newPage = cloneDeep(page);
-  const newBlock = { id: action.meta.temporaryId, content: action.meta.content };
-  if (!newPage.blocks) {
-    newPage.blocks = [newBlock];
-  } else {
-    const previousBlockIndex = newPage.blocks.findIndex((b) => b.id === action.meta.previousBlockId);
-    if (previousBlockIndex >= 0) {
-      newPage.blocks.splice(previousBlockIndex + 1, 0, newBlock);
-    } else {
-      newPage.blocks.push(newBlock);
-    }
-  }
-  return mergePageDetailToState(state, newPage);
-}
-
 export function reducePageDetail(state: SpaceState, action: AxiosSuccessAction): SpaceState {
   return mergePageDetailToState(state, action.payload.data);
 }
@@ -84,6 +60,34 @@ export function reduceSpaceList(state: SpaceState, action: AxiosSuccessAction): 
     spaces: normalizedData.result,
     spaceEntities: normalizedData.entities.spaces,
   };
+}
+
+export function reduceCreatePageBlock(
+  state: SpaceState,
+  action: ReturnType<typeof CreatePageBlockRequest>
+): SpaceState {
+  const page: IPageDetail = selectPage({ space: state } as AppRootState, action.meta.pageId);
+  if (!page) {
+    AppLogger.error(new Error(`select a does not exist space, space id = ${action.meta.pageId}`));
+    return state;
+  }
+  const newPage = cloneDeep(page);
+  const newBlock = {
+    id: action.meta.temporaryId,
+    content: action.meta.content,
+    focusInitial: action.meta.focusInitial,
+  };
+  if (!newPage.blocks) {
+    newPage.blocks = [newBlock];
+  } else {
+    const previousBlockIndex = newPage.blocks.findIndex((b) => b.id === action.meta.previousBlockId);
+    if (previousBlockIndex >= 0) {
+      newPage.blocks.splice(previousBlockIndex + 1, 0, newBlock);
+    } else {
+      newPage.blocks.push(newBlock);
+    }
+  }
+  return mergePageDetailToState(state, newPage);
 }
 
 export function reduceCreatePageBlockSuccess(state: SpaceState, action: AxiosSuccessAction): SpaceState {
@@ -107,7 +111,7 @@ export function reduceCreatePageBlockSuccess(state: SpaceState, action: AxiosSuc
     return state;
   }
   block.id = createdBlockId;
-  block.focusInitial = true;
+  block.focusInitial = action.meta.previousAction.meta.focusInitial;
   const newState = mergePageDetailToState(state, newPage);
   delete newState.pageBlockEntities[temporaryBlockId];
   return newState;

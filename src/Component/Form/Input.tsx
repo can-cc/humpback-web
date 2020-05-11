@@ -19,6 +19,7 @@ const ghostStyle: CSSProperties = {
 };
 
 export function Input(props: InputProps) {
+  const { onChangeDebounce, changeDebounceTime } = props;
   const changeRef$ = useRef(new Subject<string>());
 
   const style: CSSProperties = {
@@ -39,18 +40,16 @@ export function Input(props: InputProps) {
   };
 
   useEffect(() => {
-    if (!props.onChangeDebounce) {
+    if (!onChangeDebounce) {
       return;
     }
-    const subscriber = changeRef$.current
-      .pipe(debounceTime(props.changeDebounceTime || 600))
-      .subscribe((value: string) => {
-        props.onChangeDebounce(value);
-      });
+    const subscriber = changeRef$.current.pipe(debounceTime(changeDebounceTime || 600)).subscribe((value: string) => {
+      onChangeDebounce(value);
+    });
     return () => {
       subscriber.unsubscribe();
     };
-  }, [props]);
+  }, [onChangeDebounce, changeDebounceTime]);
 
   return (
     <input

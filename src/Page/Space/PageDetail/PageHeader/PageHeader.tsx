@@ -1,48 +1,69 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { IPage } from '../../../../domain/page';
-import { Input } from '../../../../Component/Form/Input';
 import { useDispatch } from 'react-redux';
 import { UpdatePageRequest } from '../../../../redux/action/page-action';
 import { useParams } from 'react-router-dom';
+import { TextArea } from '../../../../Component/Form/TextArea';
 
-export function PageHeader(props: { page: IPage }) {
+export function PageHeader(props: { page: IPage; isNew: boolean }) {
+  const { page, isNew } = props;
+  const textRef = useRef<HTMLTextAreaElement>();
   const params = useParams<{ spaceId: string }>();
   const spaceId = params.spaceId;
   const dispatch = useDispatch();
-  const [title, setTitle] = useState(props.page.title);
+  const [title, setTitle] = useState(page.title);
 
   useEffect(() => {
-    setTitle(props.page.title);
-  }, [props.page]);
+    setTitle(page.title);
+  }, [page]);
 
-  function updatePageTitle() {
-    if (title === props.page.title) {
-      return;
+  const updatePageTitle = useCallback(
+    (t) => {
+      if (t === page.title) {
+        return;
+      }
+      dispatch(
+        UpdatePageRequest({
+          spaceId,
+          pageId: page.id,
+          title: t,
+        })
+      );
+    },
+    [dispatch, page.title, page.id, spaceId]
+  );
+
+  useEffect(() => {
+    if (isNew) {
+      textRef.current.focus();
     }
-    dispatch(
-      UpdatePageRequest({
-        spaceId,
-        pageId: props.page.id,
-        title: title,
-      })
-    );
-  }
+  }, [isNew]);
 
   return (
     <div>
-      <Input
-        type="ghost"
+      <TextArea
+        ref={textRef}
+        borderLess
         value={title}
         onChange={(event) => setTitle(event.target.value)}
-        onChangeDebounce={() => {}}
-        onBlur={updatePageTitle}
+        onChangeDebounce={updatePageTitle}
+        onBlur={() => updatePageTitle(title)}
         onKeyDown={(keyDown) => {
           if (keyDown.key === 'Enter') {
-            updatePageTitle();
+            updatePageTitle(title);
+            textRef.current.blur();
+            keyDown.nativeEvent.preventDefault();
           }
         }}
         placeholder="未命名"
-        style={{ fontWeight: 'bold', textAlign: 'center', width: '100%', fontSize: 28 }}
+        style={{
+          fontWeight: 'bold',
+          textAlign: 'center',
+          width: '100%',
+          fontSize: 28,
+          maxHeight: 300,
+          lineHeight: 1.8,
+        }}
       />
     </div>
   );

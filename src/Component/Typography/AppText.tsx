@@ -8,14 +8,23 @@ export function AppText(props: {
   inline?: boolean;
   bold?: boolean;
   size?: number;
+  ellipsis?: boolean;
+  hoverTitle?: string;
 }) {
   const Ele = props.inline ? (p) => <span {...p} /> : (p) => <div {...p} />;
   return (
     <Ele
       className={props.className}
+      title={props.hoverTitle}
       style={{
         color: TextPrimaryColor,
         fontSize: props.size,
+        ...(props.ellipsis
+          ? {
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }
+          : {}),
         ...(props.bold
           ? {
               fontWeight: 'bold',

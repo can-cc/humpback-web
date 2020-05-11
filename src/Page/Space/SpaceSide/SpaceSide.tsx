@@ -55,7 +55,9 @@ export function SpaceSide(props: { selectPageId?: string }) {
         <ListSection style={{ paddingLeft: 3 }}>
           {pages.map((page) => (
             <ListItem active={props.selectPageId === page.id} key={page.id} onClick={() => onPageClick(page)}>
-              <AppText>{page.title || '未命名页面'}</AppText>
+              <AppText ellipsis hoverTitle={page.title}>
+                {page.title || '未命名页面'}
+              </AppText>
             </ListItem>
           ))}
         </ListSection>

@@ -5,6 +5,7 @@ export interface CreatePageBlockPayload {
   pageId: string;
   content: string;
   previousBlockId?: string;
+  focusInitial: boolean;
 }
 
 export function CreatePageBlockRequest(payload: CreatePageBlockPayload) {

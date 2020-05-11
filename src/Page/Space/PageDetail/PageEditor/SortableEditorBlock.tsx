@@ -90,7 +90,7 @@ export const SortableEditorBlock: React.FC<SortableEditorBlockProps> = ({
           onChangeDebounce={(content) => {
             updateBlock(block.id, content);
           }}
-          handleReturn={() => {
+          onReturn={() => {
             createBlock('', block.id);
           }}
         />

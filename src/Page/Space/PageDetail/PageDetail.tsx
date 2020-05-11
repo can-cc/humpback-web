@@ -4,10 +4,13 @@ import { PageHeader } from './PageHeader/PageHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootState } from '../../../redux/reducer';
 import { selectPage } from '../../../redux/selector/page-selector';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { QueryPageDetailRequest } from '../../../redux/action/page-action';
+import _get from 'lodash/get';
 
 export function PageDetail(props: { selectPageId: string }) {
+  const history = useHistory<{ isNew?: boolean }>();
+  const isNewPage = !!_get(history, ['location', 'state', 'isNew']);
   const params = useParams<{ spaceId: string }>();
   const spaceId = params.spaceId;
   const page = useSelector((state: AppRootState) => selectPage(state, props.selectPageId));
@@ -30,8 +33,8 @@ export function PageDetail(props: { selectPageId: string }) {
   }
   return (
     <div style={{ width: '100%', padding: 20, overflow: 'auto' }}>
-      <PageHeader page={page} />
-      <PageEditor spaceId={spaceId} pageId={props.selectPageId} />
+      <PageHeader page={page} isNew={isNewPage} />
+      <PageEditor spaceId={spaceId} pageId={props.selectPageId} isNew={isNewPage} />
     </div>
   );
 }

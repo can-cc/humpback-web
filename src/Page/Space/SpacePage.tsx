@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { SpaceSide } from './SpaceSide/SpaceSide';
 import { PageDetail } from './PageDetail/PageDetail';
 import { Flex } from '../../Component/Flex';
@@ -17,19 +17,20 @@ export function SpacePage() {
   const spaceId = params.spaceId;
 
   const dispatch = useDispatch();
-  const queryPageList = () =>
-    dispatch(
-      QueryPageListRequest({
-        spaceId,
-      })
-    );
+  const queryPageList = useCallback(
+    () =>
+      dispatch(
+        QueryPageListRequest({
+          spaceId,
+        })
+      ),
+    [dispatch, spaceId]
+  );
   const space = useSelector((state: AppRootState) => selectSpaceById(state, spaceId));
 
   useEffect(() => {
-    if (space) {
-      queryPageList();
-    }
-  }, [space && space.id]);
+    queryPageList();
+  }, [queryPageList]);
 
   if (!space) {
     return <div>loading...</div>;

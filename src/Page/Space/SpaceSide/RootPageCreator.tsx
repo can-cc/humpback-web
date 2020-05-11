@@ -26,13 +26,15 @@ export function RootPageCreator(props: { spaceId: string }) {
           spaceId: props.spaceId,
         })
       );
-      history.push(`/space/${props.spaceId}?pageId=${pageId}`);
+      history.push(`/space/${props.spaceId}?pageId=${pageId}`, {
+        isNew: true,
+      });
     });
   };
   return (
     <div style={{ paddingLeft: 3 }}>
       <Button onClick={createPage}>
-        <FontAwesomeIcon icon={faPlus} style={{ marginRight: 6, fontSize: 12, color: TextSecondaryColor }} />
+        <FontAwesomeIcon icon={faPlus} style={{ marginRight: 8, fontSize: 12, color: TextSecondaryColor }} />
         <AppText inline size={14} bold>
           新建页面
         </AppText>

@@ -15,29 +15,31 @@ import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
 import './PageEditor.css';
 
-export function PageEditor(props: { spaceId: string; pageId: string }) {
+export function PageEditor(props: { spaceId: string; pageId: string; isNew: boolean }) {
+  const { spaceId, pageId } = props;
   const dispatch = useDispatch();
-  const pageDetail = useSelector((state: AppRootState) => selectPage(state, props.pageId)) as IPageDetail | undefined;
+  const pageDetail = useSelector((state: AppRootState) => selectPage(state, pageId)) as IPageDetail | undefined;
 
   const createBlock = useCallback(
-    (content: string, previousBlockId?: string) => {
+    (content: string, previousBlockId?: string, focusInitial = true) => {
       dispatch(
         CreatePageBlockRequest({
-          spaceId: props.spaceId,
-          pageId: props.pageId,
+          spaceId: spaceId,
+          pageId: pageId,
           content,
           previousBlockId,
+          focusInitial,
         })
       );
     },
-    [dispatch, props.pageId, props.spaceId]
+    [dispatch, pageId, spaceId]
   );
 
   const updateBlock = (blockId: string, content: string) => {
     dispatch(
       UpdatePageBlockRequest({
-        spaceId: props.spaceId,
-        pageId: props.pageId,
+        spaceId: spaceId,
+        pageId: pageId,
         blockId,
         content: content,
       })
@@ -52,14 +54,14 @@ export function PageEditor(props: { spaceId: string; pageId: string }) {
   };
 
   const moveBlock = (blockId: string, atIndex: number) => {
-    dispatch(MovePageBlockRequest({ blockId, atIndex, pageId: props.pageId }));
+    dispatch(MovePageBlockRequest({ blockId, atIndex, pageId: pageId }));
   };
 
   const moveBlockEnd = () => {
     dispatch(
       ResortPageBlockRequest({
-        spaceId: props.spaceId,
-        pageId: props.pageId,
+        spaceId: spaceId,
+        pageId: pageId,
         blockIds: pageDetail.blocks.map((b) => b.id),
       })
     );
@@ -67,7 +69,7 @@ export function PageEditor(props: { spaceId: string; pageId: string }) {
 
   useEffect(() => {
     if (pageDetail && pageDetail.blocks === null) {
-      createBlock('');
+      createBlock('', undefined, false);
     }
   }, [createBlock, pageDetail]);
 
