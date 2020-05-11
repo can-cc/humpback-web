@@ -7,7 +7,7 @@ import {
   CreatePageBlockRequest,
   MovePageBlockRequest,
   ResortPageBlockRequest,
-  UpdatePageBlockRequest,
+  UpdatePageBlockRequest
 } from '../../../../redux/action/page-block-action';
 import { EditorArrayContainer } from './EditorArrayContainer';
 import { SortableEditorBlock } from './SortableEditorBlock';
@@ -28,7 +28,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
           pageId: pageId,
           content,
           previousBlockId,
-          focusInitial,
+          focusInitial
         })
       );
     },
@@ -42,7 +42,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
           spaceId: spaceId,
           pageId: pageId,
           blockId,
-          content: content,
+          content: content
         })
       );
     },
@@ -53,7 +53,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
     if (!pageDetail.blocks) {
       return -1;
     }
-    return pageDetail.blocks.findIndex((b) => b.id === id);
+    return pageDetail.blocks.findIndex(b => b.id === id);
   };
 
   const moveBlock = (blockId: string, atIndex: number) => {
@@ -65,7 +65,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
       ResortPageBlockRequest({
         spaceId: spaceId,
         pageId: pageId,
-        blockIds: pageDetail.blocks.map((b) => b.id),
+        blockIds: pageDetail.blocks.map(b => b.id)
       })
     );
   };
@@ -80,7 +80,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
     <div
       className="PageEditor"
       style={{
-        width: '100%',
+        width: '100%'
       }}
     >
       <DndProvider backend={Backend}>

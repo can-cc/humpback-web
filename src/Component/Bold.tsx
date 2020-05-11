@@ -6,7 +6,7 @@ export function Bold(props: { children: ReactNode; style?: CSSProperties }) {
     <AppText
       style={{
         fontWeight: 'bold',
-        ...props.style,
+        ...props.style
       }}
     >
       {props.children}

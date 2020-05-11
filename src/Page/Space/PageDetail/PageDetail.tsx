@@ -23,7 +23,7 @@ export function PageDetail(props: { selectPageId: string }) {
     dispatch(
       QueryPageDetailRequest({
         spaceId,
-        pageId: props.selectPageId,
+        pageId: props.selectPageId
       })
     );
   }, [dispatch, props.selectPageId, spaceId]);

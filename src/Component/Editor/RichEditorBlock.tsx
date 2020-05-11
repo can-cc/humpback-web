@@ -24,14 +24,14 @@ export function RichEditorBlock(props: {
     placeholder,
     onChange,
     changeDebounceTime,
-    onChangeDebounce,
+    onChangeDebounce
   } = props;
 
   const changeRef$ = useRef(new Subject<EditorState>());
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(ContentState.createFromText(initContent))
   );
-  const handleOnChange = (changedEditorState) => {
+  const handleOnChange = changedEditorState => {
     setEditorState(changedEditorState);
     if (editorState.getCurrentContent().getPlainText() === changedEditorState.getCurrentContent().getPlainText()) {
       return;

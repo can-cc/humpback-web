@@ -10,7 +10,7 @@ import {
   reducePageDetail,
   reducePageListSuccess,
   reduceSpaceList,
-  reduceUpdatePage,
+  reduceUpdatePage
 } from './reducers';
 import { UpdatePageRequest } from '../../action/page-action';
 
@@ -25,7 +25,7 @@ const defaultSpaceState = {
   spaces: [],
   spaceEntities: {},
   pageEntities: {},
-  pageBlockEntities: {},
+  pageBlockEntities: {}
 };
 
 export function SpaceReducer(

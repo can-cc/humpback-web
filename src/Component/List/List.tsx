@@ -17,10 +17,10 @@ export function List(props: { children: ReactNode; style?: CSSProperties; scroll
         ...(props.scrollY
           ? ({
               overflowY: 'auto',
-              maxHeight: '100%',
+              maxHeight: '100%'
             } as CSSProperties)
           : {}),
-        ...props.style,
+        ...props.style
       }}
     >
       {props.children}

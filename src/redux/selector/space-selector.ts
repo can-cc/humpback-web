@@ -5,7 +5,7 @@ import { ISpace } from '../../domain/space';
 
 export function selectSpaceList(state: AppRootState): ISpace[] {
   return denormalize(state.space.spaces, SpaceListSchema, {
-    spaces: state.space.spaceEntities,
+    spaces: state.space.spaceEntities
   });
 }
 

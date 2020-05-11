@@ -1,44 +1,44 @@
 .PageEditorBlock-root {
-    font-size: 14px;
-    padding: 0 15px;
-    text-align: left;
-    align-items: flex-start !important;
+  font-size: 14px;
+  padding: 0 15px;
+  text-align: left;
+  align-items: flex-start !important;
 }
 
 .PageEditorBlock-root:hover .PageEditorBlock-operation {
-    visibility: visible;
+  visibility: visible;
 }
 
 .PageEditorBlock-operation {
-    visibility: hidden;
-    margin-right: 6px;
-    flex-shrink: 0;
-    flex-grow: 0;
+  visibility: hidden;
+  margin-right: 6px;
+  flex-shrink: 0;
+  flex-grow: 0;
 }
 
 .PageEditorBlock-operation .IconButton {
-    margin-right: 6px;
+  margin-right: 6px;
 }
 
 .PageEditorBlock-root .DraftEditor-root {
-    position: relative;
-    flex-grow: 10;
+  position: relative;
+  flex-grow: 10;
 }
 
 .PageEditorBlock-root .public-DraftEditorPlaceholder-root {
-    height: 0;
-    position: relative;
-    opacity: 0.6;
+  height: 0;
+  position: relative;
+  opacity: 0.6;
 }
 
 .PageEditorBlock-root .public-DraftEditorPlaceholder-inner {
-    padding-top: 4px;
+  padding-top: 4px;
 }
 
 .PageEditorBlock-root .DraftEditor-editorContainer {
-    position: relative;
-    z-index: 10;
-    padding: 0;
-    word-break: break-all;
-    line-height: 1.8;
+  position: relative;
+  z-index: 10;
+  padding: 0;
+  word-break: break-all;
+  line-height: 1.8;
 }

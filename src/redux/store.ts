@@ -7,14 +7,14 @@ import { redirectLogin } from '../util/auth';
 
 const client = axios.create({
   baseURL: '/api',
-  responseType: 'json',
+  responseType: 'json'
 });
 
 client.interceptors.response.use(
-  function (response) {
+  function(response) {
     return response;
   },
-  function (error) {
+  function(error) {
     if (error.response.status === 401) {
       redirectLogin();
     }
@@ -34,7 +34,7 @@ export const store = createStore(
   composeEnhancers(
     applyMiddleware(
       axiosMiddleware(client, {
-        returnRejectedPromiseOnError: true,
+        returnRejectedPromiseOnError: true
       })
     )
   )

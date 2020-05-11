@@ -18,9 +18,9 @@ export function CreatePageBlockRequest(payload: CreatePageBlockPayload) {
         url: `/page/${payload.pageId}/block`,
         method: 'post',
         data: payload,
-        responseType: 'text',
-      },
-    },
+        responseType: 'text'
+      }
+    }
   };
 }
 
@@ -38,9 +38,9 @@ export function UpdatePageBlockRequest(payload: UpdatePageBlockPayload) {
       request: {
         url: `/page/${payload.pageId}/block/${payload.blockId}`,
         method: 'put',
-        data: payload,
-      },
-    },
+        data: payload
+      }
+    }
   };
 }
 
@@ -53,7 +53,7 @@ export interface MovePageBlockPayload {
 export function MovePageBlockRequest(payload: MovePageBlockPayload) {
   return {
     type: 'MOVE_PAGE_BLOCK',
-    payload: payload,
+    payload: payload
   };
 }
 
@@ -70,8 +70,8 @@ export function ResortPageBlockRequest(payload: ResortPageBlockPayload) {
       request: {
         url: `/page/${payload.pageId}/blocks/resort`,
         method: 'post',
-        data: payload,
-      },
-    },
+        data: payload
+      }
+    }
   };
 }

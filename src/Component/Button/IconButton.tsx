@@ -22,7 +22,7 @@ export function IconButton(props: {
         color: TextSecondaryColor,
         cursor: 'pointer',
         verticalAlign: 'middle',
-        ...props.buttonStyle,
+        ...props.buttonStyle
       }}
       onClick={props.onClick}
     >
@@ -30,7 +30,7 @@ export function IconButton(props: {
         size={props.iconSize || 'lg'}
         icon={props.icon}
         style={{
-          ...props.iconStyle,
+          ...props.iconStyle
         }}
       />
     </button>

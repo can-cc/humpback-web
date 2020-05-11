@@ -18,7 +18,7 @@ export function PageHeader(props: { page: IPage; isNew: boolean }) {
   }, [page]);
 
   const updatePageTitle = useCallback(
-    (t) => {
+    t => {
       if (t === page.title) {
         return;
       }
@@ -26,7 +26,7 @@ export function PageHeader(props: { page: IPage; isNew: boolean }) {
         UpdatePageRequest({
           spaceId,
           pageId: page.id,
-          title: t,
+          title: t
         })
       );
     },
@@ -45,10 +45,10 @@ export function PageHeader(props: { page: IPage; isNew: boolean }) {
         ref={textRef}
         borderLess
         value={title}
-        onChange={(event) => setTitle(event.target.value)}
+        onChange={event => setTitle(event.target.value)}
         onChangeDebounce={updatePageTitle}
         onBlur={() => updatePageTitle(title)}
-        onKeyDown={(keyDown) => {
+        onKeyDown={keyDown => {
           if (keyDown.key === 'Enter') {
             updatePageTitle(title);
             textRef.current.blur();
@@ -62,7 +62,7 @@ export function PageHeader(props: { page: IPage; isNew: boolean }) {
           width: '100%',
           fontSize: 28,
           maxHeight: 300,
-          lineHeight: 1.8,
+          lineHeight: 1.8
         }}
       />
     </div>

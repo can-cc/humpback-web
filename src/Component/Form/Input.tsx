@@ -15,7 +15,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const ghostStyle: CSSProperties = {
-  border: 'none',
+  border: 'none'
 };
 
 export function Input(props: InputProps) {
@@ -31,7 +31,7 @@ export function Input(props: InputProps) {
     width: props.block ? '100%' : 'initial',
     boxSizing: 'border-box',
     ...(props.type === 'ghost' ? ghostStyle : {}),
-    ...props.style,
+    ...props.style
   };
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {

@@ -11,7 +11,7 @@ export function AppText(props: {
   ellipsis?: boolean;
   hoverTitle?: string;
 }) {
-  const Ele = props.inline ? (p) => <span {...p} /> : (p) => <div {...p} />;
+  const Ele = props.inline ? p => <span {...p} /> : p => <div {...p} />;
   return (
     <Ele
       className={props.className}
@@ -22,15 +22,15 @@ export function AppText(props: {
         ...(props.ellipsis
           ? {
               overflow: 'hidden',
-              textOverflow: 'ellipsis',
+              textOverflow: 'ellipsis'
             }
           : {}),
         ...(props.bold
           ? {
-              fontWeight: 'bold',
+              fontWeight: 'bold'
             }
           : {}),
-        ...props.style,
+        ...props.style
       }}
     >
       {props.children}

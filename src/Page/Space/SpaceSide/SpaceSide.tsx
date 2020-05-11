@@ -35,7 +35,7 @@ export function SpaceSide(props: { selectPageId?: string }) {
         backgroundColor: SpaceSideBgColor,
         position: 'relative',
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'column'
       }}
     >
       <SpaceInfo space={space} />
@@ -49,11 +49,11 @@ export function SpaceSide(props: { selectPageId?: string }) {
         style={{
           paddingLeft: 30,
           listStyle: 'dot',
-          flexGrow: 1000,
+          flexGrow: 1000
         }}
       >
         <ListSection style={{ paddingLeft: 3 }}>
-          {pages.map((page) => (
+          {pages.map(page => (
             <ListItem active={props.selectPageId === page.id} key={page.id} onClick={() => onPageClick(page)}>
               <AppText ellipsis hoverTitle={page.title}>
                 {page.title || '未命名页面'}

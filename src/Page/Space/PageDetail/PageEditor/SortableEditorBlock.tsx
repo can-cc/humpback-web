@@ -30,7 +30,7 @@ export const SortableEditorBlock: React.FC<SortableEditorBlockProps> = ({
   findBlockIndex,
   updateBlock,
   createBlock,
-  isOnly,
+  isOnly
 }) => {
   const originalIndex = findBlockIndex(block.id);
   const ref = useRef<HTMLDivElement>(null);
@@ -59,24 +59,24 @@ export const SortableEditorBlock: React.FC<SortableEditorBlockProps> = ({
       }
       moveBlock(item.id, hoverIndex);
       item.originalIndex = hoverIndex;
-    },
+    }
   });
 
   const [{ isDragging }, drag, preview] = useDrag({
     item: { type: 'PageEditorBlock', id: block.id, index: originalIndex },
     collect: (monitor: DragSourceMonitor) => ({
-      isDragging: monitor.isDragging(),
+      isDragging: monitor.isDragging()
     }),
     end: (dropResult, monitor) => {
       const didDrop = monitor.didDrop();
       if (didDrop) {
         moveBlockEnd();
       }
-    },
+    }
   });
 
   const onChangeDebounce = useCallback(
-    (content) => {
+    content => {
       updateBlock(block.id, content);
     },
     [block.id, updateBlock]

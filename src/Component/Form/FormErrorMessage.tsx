@@ -7,7 +7,7 @@ export function FormErrorMessage(props: { children: ReactNode }) {
       style={{
         fontSize: 13,
         marginTop: 6,
-        color: ColorErrorMessage,
+        color: ColorErrorMessage
       }}
     >
       {props.children}

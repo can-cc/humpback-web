@@ -5,7 +5,7 @@ export function _ModalContent(props: { style?: CSSProperties; children: ReactNod
     <div
       style={{
         padding: '18px 12px',
-        ...props.style,
+        ...props.style
       }}
     >
       {props.children}
