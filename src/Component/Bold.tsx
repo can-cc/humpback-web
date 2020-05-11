@@ -1,15 +1,15 @@
 import React, { CSSProperties, ReactNode } from 'react';
-import { Text } from './Text';
+import { AppText } from './Typography/AppText';
 
 export function Bold(props: { children: ReactNode; style?: CSSProperties }) {
   return (
-    <Text
+    <AppText
       style={{
         fontWeight: 'bold',
         ...props.style,
       }}
     >
       {props.children}
-    </Text>
+    </AppText>
   );
 }

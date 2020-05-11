@@ -1,16 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ContentState, DraftHandleValue, Editor, EditorState } from 'draft-js';
-import { IconButton } from '../Button/IconButton';
-import { faEllipsisV, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Flex } from '../Flex';
 
-import './RichEditorBlock.css';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 export function RichEditorBlock(props: {
   handleReturn: (content: string) => void;
-  isNew: boolean;
+  focusInitial: boolean;
   initContent: string;
   onBlur?: () => void;
   onChange?: (content: string) => void;
@@ -46,17 +42,18 @@ export function RichEditorBlock(props: {
   };
 
   useEffect(() => {
-    if (props.isNew) {
+    if (props.focusInitial) {
       editorRef.current.focus();
     }
-  }, [props.isNew]);
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     if (!props.onChangeDebounce) {
       return;
     }
     const subscriber = changeRef$.current
-      .pipe(debounceTime(props.changeDebounceTime || 1300))
+      .pipe(debounceTime(props.changeDebounceTime || 600))
       .subscribe((state: EditorState) => {
         props.onChangeDebounce(state.getCurrentContent().getPlainText());
       });
@@ -67,19 +64,13 @@ export function RichEditorBlock(props: {
   }, []);
 
   return (
-    <Flex alignCenter className="RichEditorBlock-root">
-      <div className="RichEditorBlock-operation">
-        <IconButton icon={faPlus} />
-        <IconButton icon={faEllipsisV} />
-      </div>
-      <Editor
-        ref={editorRef}
-        placeholder="Typing here."
-        editorState={editorState}
-        onChange={onChange}
-        onBlur={onBlur}
-        handleReturn={handleReturn}
-      />
-    </Flex>
+    <Editor
+      ref={editorRef}
+      placeholder="请输入内容"
+      editorState={editorState}
+      onChange={onChange}
+      onBlur={onBlur}
+      handleReturn={handleReturn}
+    />
   );
 }

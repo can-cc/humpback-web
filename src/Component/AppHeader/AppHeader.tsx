@@ -22,7 +22,6 @@ export function AppHeader() {
     const querySpaces = () => {
       dispatch(QuerySpaceListRequest({}));
     };
-    // setCreateSpaceModalVisible(true);
     querySpaces();
   }, [dispatch]);
 

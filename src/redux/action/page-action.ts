@@ -11,6 +11,7 @@ export function CreatPageRequest(payload: CreatePagePayload) {
         url: `/page`,
         method: 'post',
         data: payload,
+        responseType: 'text',
       },
     },
   };

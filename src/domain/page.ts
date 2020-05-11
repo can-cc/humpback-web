@@ -6,6 +6,7 @@ export interface IPage {
 export interface IPageBlock {
   id: string;
   content: string;
+  focusInitial?: boolean;
 }
 
 export interface IPageDetail extends IPage {

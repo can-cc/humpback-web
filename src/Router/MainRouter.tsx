@@ -7,8 +7,8 @@ import { SpaceListPage } from '../Page/SpaceList/SpaceListPage';
 export function MainRouter() {
   return (
     <>
-      <AppHeader />
       <Router>
+        <AppHeader />
         <Switch>
           <Route path="/spaces" component={SpaceListPage} />
           <Route path="/space/:spaceId" component={SpacePage} />

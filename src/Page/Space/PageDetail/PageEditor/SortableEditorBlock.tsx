@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { IPageBlock } from '../../../../domain/page';
 import { RichEditorBlock } from '../../../../Component/Editor/RichEditorBlock';
-import { useDrag, useDrop } from 'react-dnd';
+import { DragSourceMonitor, useDrag, useDrop, XYCoord } from 'react-dnd';
+import { Flex } from '../../../../Component/Flex';
+import { IconButton } from '../../../../Component/Button/IconButton';
+import { faEllipsisV, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { DropTargetMonitor } from 'react-dnd/lib/interfaces/monitors';
 
 interface SortableEditorBlockProps {
   block: IPageBlock;
   findBlockIndex: Function;
   moveBlock: Function;
+  moveBlockEnd: Function;
   updateBlock: Function;
   createBlock: Function;
 }
@@ -20,49 +25,76 @@ interface DragItem {
 export const SortableEditorBlock: React.FC<SortableEditorBlockProps> = ({
   block,
   moveBlock,
+  moveBlockEnd,
   findBlockIndex,
   updateBlock,
   createBlock,
 }) => {
   const originalIndex = findBlockIndex(block.id);
-  const [{ isDragging }, drag] = useDrag({
-    item: { type: 'PageEditorBlock', id: block.id, originalIndex },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-    end: (dropResult, monitor) => {
-      const { id: droppedId, originalIndex } = monitor.getItem();
-      const didDrop = monitor.didDrop();
-      if (!didDrop) {
-        moveBlock(droppedId, originalIndex);
-      }
-    },
-  });
+  const ref = useRef<HTMLDivElement>(null);
 
   const [, drop] = useDrop({
     accept: 'PageEditorBlock',
-    canDrop: () => false,
-    hover({ id: draggedId }: DragItem) {
-      if (draggedId !== block.id) {
-        const index = findBlockIndex(block.id);
-        moveBlock(draggedId, index);
+    hover(item: DragItem, monitor: DropTargetMonitor) {
+      if (!ref.current) {
+        return;
+      }
+      const dragIndex = item.originalIndex;
+      const hoverIndex = originalIndex;
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+      const hoverBoundingRect = ref.current!.getBoundingClientRect();
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const clientOffset = monitor.getClientOffset();
+      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return;
+      }
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return;
+      }
+      moveBlock(item.id, hoverIndex);
+      item.originalIndex = hoverIndex;
+    },
+  });
+
+  const [{ isDragging }, drag, preview] = useDrag({
+    item: { type: 'PageEditorBlock', id: block.id, index: originalIndex },
+    collect: (monitor: DragSourceMonitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+    end: (dropResult, monitor) => {
+      const didDrop = monitor.didDrop();
+      if (didDrop) {
+        moveBlockEnd();
       }
     },
   });
 
   const opacity = isDragging ? 0.3 : 1;
+
+  drop(preview(ref));
   return (
-    <div ref={(node) => drag(drop(node))} style={{ opacity }}>
-      <RichEditorBlock
-        isNew={!!block.id}
-        initContent={block.content}
-        onChangeDebounce={(content) => {
-          updateBlock(block.id, content);
-        }}
-        handleReturn={() => {
-          createBlock('', block.id);
-        }}
-      />
+    <div ref={ref} style={{ opacity }}>
+      <Flex alignCenter className="PageEditorBlock-root">
+        <div className="PageEditorBlock-operation">
+          <IconButton icon={faPlus} />
+          <div style={{ display: 'inline-block' }} ref={drag}>
+            <IconButton buttonStyle={{ cursor: '-webkit-grab' }} icon={faEllipsisV} />
+          </div>
+        </div>
+        <RichEditorBlock
+          focusInitial={block.focusInitial}
+          initContent={block.content}
+          onChangeDebounce={(content) => {
+            updateBlock(block.id, content);
+          }}
+          handleReturn={() => {
+            createBlock('', block.id);
+          }}
+        />
+      </Flex>
     </div>
   );
 };

@@ -8,7 +8,7 @@ export interface CreatePageBlockPayload {
 }
 
 export function CreatePageBlockRequest(payload: CreatePageBlockPayload) {
-  const temporaryId = generateTemporarilyId('page-block');
+  const temporaryId = generateTemporarilyId('temporary-page-block');
   return {
     type: 'CREATE_PAGE_BLOCK',
     meta: { ...payload, temporaryId: temporaryId },
@@ -49,10 +49,28 @@ export interface MovePageBlockPayload {
   pageId: string;
 }
 
-export function MovePageBlockPayload(payload: MovePageBlockPayload) {
+export function MovePageBlockRequest(payload: MovePageBlockPayload) {
   return {
     type: 'MOVE_PAGE_BLOCK',
-    meta: payload,
-    payload: {},
+    payload: payload,
+  };
+}
+
+export interface ResortPageBlockPayload {
+  pageId: string;
+  spaceId: string;
+  blockIds: string[];
+}
+
+export function ResortPageBlockRequest(payload: ResortPageBlockPayload) {
+  return {
+    type: 'RESORT_PAGE_BLOCK',
+    payload: {
+      request: {
+        url: `/page/${payload.pageId}/blocks/resort`,
+        method: 'post',
+        data: payload,
+      },
+    },
   };
 }

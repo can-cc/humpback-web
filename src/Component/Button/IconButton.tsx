@@ -7,6 +7,7 @@ export function IconButton(props: {
   icon: IconProp | any;
   iconSize?: SizeProp;
   iconStyle?: CSSProperties;
+  buttonStyle?: CSSProperties;
   onClick?: (e: SyntheticEvent) => void;
 }) {
   return (
@@ -18,7 +19,9 @@ export function IconButton(props: {
         borderRadius: 3,
         padding: '3px 5px',
         color: '#888',
+        cursor: 'pointer',
         verticalAlign: 'middle',
+        ...props.buttonStyle,
       }}
       onClick={props.onClick}
     >

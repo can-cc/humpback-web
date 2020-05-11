@@ -14,13 +14,16 @@ export function PageDetail(props: { selectPageId: string }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (!props.selectPageId) {
+      return;
+    }
     dispatch(
       QueryPageDetailRequest({
         spaceId,
         pageId: props.selectPageId,
       })
     );
-  }, [props.selectPageId]);
+  }, [dispatch, props.selectPageId, spaceId]);
 
   if (!page) {
     return <div>nothing...</div>;

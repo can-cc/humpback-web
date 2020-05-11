@@ -13,6 +13,8 @@ export function _ListItem(props: { children: ReactNode; onClick?: () => void; ac
     <li
       style={{
         fontSize: 14,
+        lineHeight: 1.6,
+        padding: '3px 0',
         ...(!!props.onClick ? clickableStyle : {}),
         ...(props.active ? activeStyle : {}),
       }}

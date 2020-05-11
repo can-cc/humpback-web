@@ -1,11 +1,17 @@
-import React, { CSSProperties, InputHTMLAttributes } from 'react';
+import React, { ChangeEvent, CSSProperties, InputHTMLAttributes, useEffect, useRef } from 'react';
 import omit from 'lodash/omit';
+import { buildClassName } from '../../util/component';
+import './Input.css';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 export type InputType = 'normal' | 'ghost';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   block?: boolean;
   type?: InputType;
+  onChangeDebounce?: (value: string) => void;
+  changeDebounceTime?: number;
 }
 
 const ghostStyle: CSSProperties = {
@@ -13,6 +19,8 @@ const ghostStyle: CSSProperties = {
 };
 
 export function Input(props: InputProps) {
+  const changeRef$ = useRef(new Subject<string>());
+
   const style: CSSProperties = {
     outline: 'none',
     fontSize: 'inherit',
@@ -25,5 +33,31 @@ export function Input(props: InputProps) {
     ...props.style,
   };
 
-  return <input style={style} {...omit(props, ['style', 'block'])} />;
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    props.onChangeDebounce && changeRef$.current.next(event.target.value);
+    props.onChange && props.onChange(event);
+  };
+
+  useEffect(() => {
+    if (!props.onChangeDebounce) {
+      return;
+    }
+    const subscriber = changeRef$.current
+      .pipe(debounceTime(props.changeDebounceTime || 600))
+      .subscribe((value: string) => {
+        props.onChangeDebounce(value);
+      });
+    return () => {
+      subscriber.unsubscribe();
+    };
+  }, [props]);
+
+  return (
+    <input
+      className={buildClassName(['AppInput', props.className])}
+      style={style}
+      onChange={onChange}
+      {...omit(props, ['style', 'block', 'className', 'onChange', 'onChangeDebounce'])}
+    />
+  );
 }

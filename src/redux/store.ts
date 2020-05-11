@@ -1,9 +1,9 @@
 import { applyMiddleware, compose, createStore } from 'redux';
-import { rootReducer } from './reducer/index';
+import { rootReducer } from './reducer';
 import axios from 'axios';
 
 import axiosMiddleware from 'redux-axios-middleware';
-import { appHistory } from '../common/history';
+import { redirectLogin } from '../util/auth';
 
 const client = axios.create({
   baseURL: '/api',
@@ -16,7 +16,7 @@ client.interceptors.response.use(
   },
   function (error) {
     if (error.response.status === 401) {
-      appHistory.push('/oauth');
+      redirectLogin();
     }
     throw error;
   }

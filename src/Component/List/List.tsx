@@ -6,7 +6,7 @@ import { _ListSection } from './ListSection';
 export const ListItem = _ListItem;
 export const ListSection = _ListSection;
 
-export function List(props: { children: ReactNode; style?: CSSProperties }) {
+export function List(props: { children: ReactNode; style?: CSSProperties; scrollY?: boolean }) {
   return (
     <ul
       style={{
@@ -14,6 +14,12 @@ export function List(props: { children: ReactNode; style?: CSSProperties }) {
         listStyle: 'none',
         margin: 0,
         padding: 0,
+        ...(props.scrollY
+          ? ({
+              overflowY: 'auto',
+              maxHeight: '100%',
+            } as CSSProperties)
+          : {}),
         ...props.style,
       }}
     >

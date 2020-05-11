@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { ListItem } from '../List/List';
 import { AppDropDown } from '../DropDown/DropDown';
-import { Text } from '../Text';
+import { AppText } from '../Typography/AppText';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
@@ -24,7 +24,7 @@ export function AppHeaderLink(props: { text: string; dropDownOverlay?: ReactNode
                 : {}),
             }}
           >
-            <Text>{props.text}</Text>
+            <AppText>{props.text}</AppText>
             <FontAwesomeIcon
               size="sm"
               icon={faChevronDown}

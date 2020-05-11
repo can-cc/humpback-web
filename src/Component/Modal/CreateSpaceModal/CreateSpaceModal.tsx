@@ -43,6 +43,7 @@ export function CreateSpaceModal(props: { isOpen: boolean; onClose: () => void }
           createSpace(values)
             .then(() => {
               setSubmitting(false);
+              props.onClose();
             })
             .catch(() => {
               setSubmitting(false);

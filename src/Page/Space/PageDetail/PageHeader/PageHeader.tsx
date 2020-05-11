@@ -11,15 +11,14 @@ export function PageHeader(props: { page: IPage }) {
   const dispatch = useDispatch();
   const [title, setTitle] = useState(props.page.title);
 
-  let updatedTitle: string;
   useEffect(() => {
-    updatedTitle = title;
-  }, []);
+    setTitle(props.page.title);
+  }, [props.page]);
+
   function updatePageTitle() {
-    if (updatedTitle === title) {
+    if (title === props.page.title) {
       return;
     }
-    updatedTitle = title;
     dispatch(
       UpdatePageRequest({
         spaceId,
@@ -35,6 +34,7 @@ export function PageHeader(props: { page: IPage }) {
         type="ghost"
         value={title}
         onChange={(event) => setTitle(event.target.value)}
+        onChangeDebounce={() => {}}
         onBlur={updatePageTitle}
         onKeyDown={(keyDown) => {
           if (keyDown.key === 'Enter') {

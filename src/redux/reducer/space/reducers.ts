@@ -8,10 +8,11 @@ import { buildStateWorker } from '../reducer-util';
 import { mergePageDetailToState, mergeSpaceInState } from './share';
 import { SpaceState } from './space-reducer';
 import { NormalizedEntities } from '../interface';
-import { CreatePageBlockRequest } from '../../action/page-block-action';
+import { CreatePageBlockRequest, MovePageBlockRequest } from '../../action/page-block-action';
 import { selectPage } from '../../selector/page-selector';
 import { AppRootState } from '../index';
 import cloneDeep from 'lodash/cloneDeep';
+import { UpdatePageRequest } from '../../action/page-action';
 
 function mergePageEntities(pageEntities: NormalizedEntities<IPage>) {
   return function (state: SpaceState): SpaceState {
@@ -30,7 +31,10 @@ function mergePageEntities(pageEntities: NormalizedEntities<IPage>) {
   };
 }
 
-export function reducePageList(state: SpaceState, action: AxiosSuccessAction): SpaceState {
+export function reducePageListSuccess(state: SpaceState, action: AxiosSuccessAction): SpaceState {
+  if (!action.payload.data || !action.payload.data.length) {
+    return state;
+  }
   const spaceId = action.meta.previousAction.meta.spaceId;
   const space = state.spaceEntities[spaceId];
   if (!space) {
@@ -55,7 +59,7 @@ export function reduceCreatePageBlock(
     return state;
   }
   const newPage = cloneDeep(page);
-  const newBlock = { id: action.meta.temporaryId, content: '' };
+  const newBlock = { id: action.meta.temporaryId, content: action.meta.content };
   if (!newPage.blocks) {
     newPage.blocks = [newBlock];
   } else {
@@ -98,8 +102,48 @@ export function reduceCreatePageBlockSuccess(state: SpaceState, action: AxiosSuc
   }
   const newPage: IPageDetail = cloneDeep(page);
   const block = newPage.blocks.find((b: IPageBlock) => b.id === temporaryBlockId);
+  if (!block) {
+    AppLogger.error(new Error(`temporary block not found`));
+    return state;
+  }
   block.id = createdBlockId;
+  block.focusInitial = true;
   const newState = mergePageDetailToState(state, newPage);
   delete newState.pageBlockEntities[temporaryBlockId];
   return newState;
+}
+
+export function reduceMovePageBlock(state: SpaceState, action: ReturnType<typeof MovePageBlockRequest>): SpaceState {
+  const page: IPageDetail = selectPage({ space: state } as AppRootState, action.payload.pageId);
+  if (!page) {
+    AppLogger.error(new Error(`select a does not exist space, space id = ${action.payload.pageId}`));
+    return state;
+  }
+  const newPage = cloneDeep(page);
+  if (!newPage.blocks) {
+    AppLogger.error(new Error(`page blocks is undefined`));
+    return state;
+  }
+  const draggedBlock = newPage.blocks.find((b) => b.id === action.payload.blockId);
+  const draggedBlockIndex = newPage.blocks.findIndex((b) => b.id === action.payload.blockId);
+  if (draggedBlockIndex < 0) {
+    AppLogger.error(new Error(`moving block not exist.`));
+    return state;
+  }
+  newPage.blocks.splice(draggedBlockIndex, 1);
+  newPage.blocks.splice(action.payload.atIndex, 0, draggedBlock);
+  return mergePageDetailToState(state, newPage);
+}
+
+export function reduceUpdatePage(state: SpaceState, action: ReturnType<typeof UpdatePageRequest>): SpaceState {
+  return {
+    ...state,
+    pageEntities: {
+      ...state.pageEntities,
+      [action.meta.pageId]: {
+        ...state.pageEntities[action.meta.pageId],
+        ...action.meta,
+      },
+    },
+  };
 }

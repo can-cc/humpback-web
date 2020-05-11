@@ -8,7 +8,7 @@ export function SpaceInfo(props: { space: ISpace }) {
     <Flex
       alignCenter
       style={{
-        padding: '12px 18px',
+        padding: '12px 13px',
       }}
     >
       <img

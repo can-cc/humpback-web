@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RootRouter } from './Router/RootRouter';
+import { checkSessionRedirectAfterLandIn } from './util/auth';
 
 function App() {
+  useEffect(() => {
+    checkSessionRedirectAfterLandIn();
+  }, []);
   return (
     <div
       style={{
