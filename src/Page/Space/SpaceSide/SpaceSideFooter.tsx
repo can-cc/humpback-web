@@ -15,7 +15,7 @@ export function SpaceSideFooter(props: { space: ISpace }) {
         flex: '0 0 auto',
         paddingBottom: 8,
         width: '100%',
-        backgroundColor: SpaceSideBgColor
+        backgroundColor: SpaceSideBgColor,
       }}
     >
       <Flex alignCenter spaceBetween style={{ padding: '0 0px', fontSize: 14, paddingLeft: 8, paddingTop: 6 }}>

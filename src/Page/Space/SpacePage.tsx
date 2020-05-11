@@ -21,7 +21,7 @@ export function SpacePage() {
     () =>
       dispatch(
         QueryPageListRequest({
-          spaceId
+          spaceId,
         })
       ),
     [dispatch, spaceId]
@@ -40,7 +40,7 @@ export function SpacePage() {
     <Flex
       style={{
         height: '100%',
-        overflow: 'hidden'
+        overflow: 'hidden',
       }}
     >
       <SpaceSide selectPageId={selectPageId} />

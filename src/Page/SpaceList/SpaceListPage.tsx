@@ -10,7 +10,7 @@ export function SpaceListPage() {
 
   return (
     <div>
-      {spaceList.map(space => {
+      {spaceList.map((space) => {
         return (
           <div
             key={space.id}

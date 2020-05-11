@@ -11,9 +11,9 @@ export function CreatPageRequest(payload: CreatePagePayload) {
         url: `/page`,
         method: 'post',
         data: payload,
-        responseType: 'text'
-      }
-    }
+        responseType: 'text',
+      },
+    },
   };
 }
 
@@ -28,9 +28,9 @@ export function QueryPageListRequest(payload: QueryPagePayload) {
     payload: {
       request: {
         url: `/space/${payload.spaceId}/pages`,
-        method: 'get'
-      }
-    }
+        method: 'get',
+      },
+    },
   };
 }
 
@@ -46,9 +46,9 @@ export function QueryPageDetailRequest(payload: QueryPageDetailPayload) {
     payload: {
       request: {
         url: `/space/${payload.spaceId}/page/${payload.pageId}`,
-        method: 'get'
-      }
-    }
+        method: 'get',
+      },
+    },
   };
 }
 
@@ -66,8 +66,8 @@ export function UpdatePageRequest(payload: UpdatePagePayload) {
       request: {
         url: `/page/${payload.pageId}`,
         method: 'patch',
-        data: payload
-      }
-    }
+        data: payload,
+      },
+    },
   };
 }

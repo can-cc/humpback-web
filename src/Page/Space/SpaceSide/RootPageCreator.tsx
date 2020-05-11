@@ -17,17 +17,17 @@ export function RootPageCreator(props: { spaceId: string }) {
     ((dispatch(
       CreatPageRequest({
         spaceId: props.spaceId,
-        title: ''
+        title: '',
       })
     ) as unknown) as Promise<AxiosSuccessAction>).then((action: AxiosSuccessAction) => {
       const pageId = action.payload.data;
       dispatch(
         QueryPageListRequest({
-          spaceId: props.spaceId
+          spaceId: props.spaceId,
         })
       );
       history.push(`/space/${props.spaceId}?pageId=${pageId}`, {
-        isNew: true
+        isNew: true,
       });
     });
   };

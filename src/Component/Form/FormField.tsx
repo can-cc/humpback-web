@@ -16,7 +16,7 @@ export function FormField({ name, icon, children, className = '', type = 'inline
     <div
       className={`FormField ${className}`}
       style={{
-        verticalAlign: 'center'
+        verticalAlign: 'center',
       }}
     >
       {name && (
@@ -24,7 +24,7 @@ export function FormField({ name, icon, children, className = '', type = 'inline
           className={`FormField--name`}
           style={{
             marginRight: 12,
-            color: TextSecondaryColor
+            color: TextSecondaryColor,
           }}
         >
           {name}

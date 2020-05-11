@@ -5,7 +5,7 @@ export function _ListSection(props: { children: ReactNode; style?: CSSProperties
     <div
       style={{
         padding: 8,
-        ...props.style
+        ...props.style,
       }}
     >
       {props.children}

@@ -8,21 +8,21 @@ export function SpaceInfo(props: { space: ISpace }) {
     <Flex
       alignCenter
       style={{
-        padding: '12px 13px'
+        padding: '12px 13px',
       }}
     >
       <img
         width="60"
         style={{
           boxShadow: '0 0 9px #eee',
-          borderRadius: 8
+          borderRadius: 8,
         }}
         src="/humpback_logo.png"
         alt="logo"
       />
       <Bold
         style={{
-          marginLeft: 12
+          marginLeft: 12,
         }}
       >
         {props.space.name}

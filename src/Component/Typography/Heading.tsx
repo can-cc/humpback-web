@@ -9,7 +9,7 @@ export function Heading(props: { children: ReactNode; style?: CSSProperties; cla
       style={{
         fontSize: 20,
         color: TextPrimaryColor,
-        ...props.style
+        ...props.style,
       }}
     >
       {props.children}

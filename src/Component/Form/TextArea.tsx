@@ -44,10 +44,10 @@ export const TextArea = React.forwardRef((props: TextAreaProps, ref?: MutableRef
           ? {
               border: 'none',
               outline: 'none',
-              resize: 'none'
+              resize: 'none',
             }
           : {}),
-        ...props.style
+        ...props.style,
       }}
       {...omit(props, ['className', 'style', 'onChange', 'onChangeDebounce', 'changeDebounceTime', 'borderLess'])}
     />

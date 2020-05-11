@@ -19,9 +19,9 @@ export function AppHeaderLink(props: { text: string; dropDownOverlay?: ReactNode
               alignItems: 'center',
               ...(toggle
                 ? {
-                    backgroundColor: '#687cf1'
+                    backgroundColor: '#687cf1',
                   }
-                : {})
+                : {}),
             }}
           >
             <AppText>{props.text}</AppText>
@@ -30,7 +30,7 @@ export function AppHeaderLink(props: { text: string; dropDownOverlay?: ReactNode
               icon={faChevronDown}
               style={{
                 marginTop: 2,
-                marginLeft: 3
+                marginLeft: 3,
               }}
             />
           </div>

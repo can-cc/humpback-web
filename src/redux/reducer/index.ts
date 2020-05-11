@@ -6,5 +6,5 @@ export interface AppRootState {
 }
 
 export const rootReducer = combineReducers({
-  space: SpaceReducer
+  space: SpaceReducer,
 });

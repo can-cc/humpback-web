@@ -9,9 +9,9 @@ export function CreateSpaceRequest(payload: CreateSpacePayload) {
       request: {
         url: `/space`,
         method: 'post',
-        data: payload
-      }
-    }
+        data: payload,
+      },
+    },
   };
 }
 
@@ -22,8 +22,8 @@ export function QuerySpaceListRequest(payload: QuerySpaceListPayload) {
     type: 'QUERY_SPACE_LIST',
     payload: {
       request: {
-        url: `/spaces`
-      }
-    }
+        url: `/spaces`,
+      },
+    },
   };
 }

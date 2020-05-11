@@ -14,9 +14,7 @@ interface FormValues {
 }
 
 const validationSchema = Yup.object({
-  name: Yup.string()
-    .max(15, '不能超过15个字符')
-    .required('请填写空间名称')
+  name: Yup.string().max(15, '不能超过15个字符').required('请填写空间名称'),
 });
 
 export function CreateSpaceModal(props: { isOpen: boolean; onClose: () => void }) {
@@ -31,8 +29,8 @@ export function CreateSpaceModal(props: { isOpen: boolean; onClose: () => void }
       isOpen={props.isOpen}
       style={{
         content: {
-          width: 480
-        }
+          width: 480,
+        },
       }}
       onRequestClose={props.onClose}
     >
@@ -56,7 +54,7 @@ export function CreateSpaceModal(props: { isOpen: boolean; onClose: () => void }
           <Form>
             <ModalContent
               style={{
-                minHeight: 120
+                minHeight: 120,
               }}
             >
               <FormField name="空间名称">
@@ -68,7 +66,7 @@ export function CreateSpaceModal(props: { isOpen: boolean; onClose: () => void }
             <ModalFooter>
               <div
                 style={{
-                  textAlign: 'right'
+                  textAlign: 'right',
                 }}
               >
                 <Button type="primary" htmlType="submit" disabled={isSubmitting || !isValid}>
