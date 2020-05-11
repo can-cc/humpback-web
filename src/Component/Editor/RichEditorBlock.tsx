@@ -8,7 +8,8 @@ export function RichEditorBlock(props: {
   onReturn: (content: string) => void;
   focusInitial: boolean;
   initContent: string;
-  onBlur?: (editorState: EditorState) => void;
+  onBlur?: () => void;
+  onFocus?: () => void;
   placeholder?: string;
   onChange?: (content: string) => void;
   changeDebounceTime?: number;
@@ -19,6 +20,7 @@ export function RichEditorBlock(props: {
     focusInitial,
     initContent,
     onBlur,
+    onFocus,
     placeholder,
     onChange,
     changeDebounceTime,
@@ -38,14 +40,15 @@ export function RichEditorBlock(props: {
     onChange && onChange(changedEditorState.getCurrentContent().getPlainText());
   };
 
-  const handleOnBlur = (editorState) => {
-    if (onBlur) {
-      onBlur(editorState);
-    }
+  const handleOnBlur = () => {
+    onBlur && onBlur();
+  };
+
+  const handleOnFocus = () => {
+    onFocus && onFocus();
   };
 
   const editorRef = useRef(null);
-
   const handleReturn = (e: React.KeyboardEvent<{}>, editorState: EditorState): DraftHandleValue => {
     editorRef.current.blur();
     e.preventDefault();
@@ -79,6 +82,7 @@ export function RichEditorBlock(props: {
       placeholder={placeholder}
       editorState={editorState}
       onChange={handleOnChange}
+      onFocus={handleOnFocus}
       onBlur={handleOnBlur}
       handleReturn={handleReturn}
     />

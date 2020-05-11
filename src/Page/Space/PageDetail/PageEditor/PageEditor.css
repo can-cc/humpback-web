@@ -1,6 +1,6 @@
 .PageEditorBlock-root {
     font-size: 14px;
-    padding: 4px 15px;
+    padding: 0 15px;
     text-align: left;
     align-items: flex-start !important;
 }
@@ -38,11 +38,7 @@
 .PageEditorBlock-root .DraftEditor-editorContainer {
     position: relative;
     z-index: 10;
-    padding: 3px 0;
+    padding: 0;
     word-break: break-all;
     line-height: 1.8;
-    /* position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%; */
 }

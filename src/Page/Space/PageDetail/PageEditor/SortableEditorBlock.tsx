@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { IPageBlock } from '../../../../domain/page';
 import { RichEditorBlock } from '../../../../Component/Editor/RichEditorBlock';
 import { DragSourceMonitor, useDrag, useDrop, XYCoord } from 'react-dnd';
@@ -14,6 +14,7 @@ interface SortableEditorBlockProps {
   moveBlockEnd: Function;
   updateBlock: Function;
   createBlock: Function;
+  isOnly: boolean;
 }
 
 interface DragItem {
@@ -29,9 +30,11 @@ export const SortableEditorBlock: React.FC<SortableEditorBlockProps> = ({
   findBlockIndex,
   updateBlock,
   createBlock,
+  isOnly,
 }) => {
   const originalIndex = findBlockIndex(block.id);
   const ref = useRef<HTMLDivElement>(null);
+  const [editorFocus, setEditorFocus] = useState(false);
 
   const [, drop] = useDrop({
     accept: 'PageEditorBlock',
@@ -72,6 +75,13 @@ export const SortableEditorBlock: React.FC<SortableEditorBlockProps> = ({
     },
   });
 
+  const onChangeDebounce = useCallback(
+    (content) => {
+      updateBlock(block.id, content);
+    },
+    [block.id, updateBlock]
+  );
+
   const opacity = isDragging ? 0.3 : 1;
 
   drop(preview(ref));
@@ -87,10 +97,10 @@ export const SortableEditorBlock: React.FC<SortableEditorBlockProps> = ({
         <RichEditorBlock
           focusInitial={block.focusInitial}
           initContent={block.content}
-          onChangeDebounce={(content) => {
-            updateBlock(block.id, content);
-          }}
-          placeholder={block.focusInitial ? '请输入内容' : ''}
+          onChangeDebounce={onChangeDebounce}
+          placeholder={isOnly || editorFocus ? '请输入内容' : ''}
+          onFocus={useCallback(() => setEditorFocus(true), [])}
+          onBlur={useCallback(() => setEditorFocus(false), [])}
           onReturn={() => {
             createBlock('', block.id);
           }}

@@ -35,16 +35,19 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
     [dispatch, pageId, spaceId]
   );
 
-  const updateBlock = (blockId: string, content: string) => {
-    dispatch(
-      UpdatePageBlockRequest({
-        spaceId: spaceId,
-        pageId: pageId,
-        blockId,
-        content: content,
-      })
-    );
-  };
+  const updateBlock = useCallback(
+    (blockId: string, content: string) => {
+      dispatch(
+        UpdatePageBlockRequest({
+          spaceId: spaceId,
+          pageId: pageId,
+          blockId,
+          content: content,
+        })
+      );
+    },
+    [dispatch, pageId, spaceId]
+  );
 
   const findBlockIndex = (id: string): number => {
     if (!pageDetail.blocks) {
@@ -93,6 +96,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
                   moveBlock={moveBlock}
                   createBlock={createBlock}
                   updateBlock={updateBlock}
+                  isOnly={pageDetail.blocks.length === 1}
                 />
               );
             })}
