@@ -6,7 +6,7 @@ export function Humpback(props: { style?: CSSProperties }) {
       src={require('../asset/humpback.svg')}
       alt="humpback"
       style={{
-        width: 120,
+        width: 98,
         ...props.style,
       }}
     />

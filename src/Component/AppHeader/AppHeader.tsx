@@ -12,7 +12,7 @@ import { selectSpaceList } from '../../redux/selector/space-selector';
 import { AppRootState } from '../../redux/reducer';
 import { AppHeaderLink } from './AppHeaderLink';
 
-export const AppHeaderHeight = 42;
+export const AppHeaderHeight = 36;
 
 export function AppHeader() {
   const dispatch = useDispatch();
