@@ -76,7 +76,7 @@ export function RichEditorBlock(props: {
   return (
     <Editor
       ref={editorRef}
-      placeholder={placeholder || '请输入内容'}
+      placeholder={placeholder}
       editorState={editorState}
       onChange={handleOnChange}
       onBlur={handleOnBlur}

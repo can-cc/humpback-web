@@ -18,11 +18,11 @@ export function SpaceSideFooter(props: { space: ISpace }) {
         backgroundColor: SpaceSideBgColor,
       }}
     >
-      <Flex alignCenter spaceBetween style={{ padding: '0 0px', fontSize: 14 }}>
-        <Button>
+      <Flex alignCenter spaceBetween style={{ padding: '0 0px', fontSize: 14, paddingLeft: 8, paddingTop: 6 }}>
+        <Button type="ghost" size="sm">
           <FontAwesomeIcon icon={faCog} style={{ marginRight: 6, fontSize: 13, color: TextPrimaryColor }} />
           <AppText inline size={14}>
-            设置空间
+            空间设置
           </AppText>
         </Button>
       </Flex>

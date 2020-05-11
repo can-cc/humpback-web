@@ -1,16 +1,17 @@
 import React, { CSSProperties, MutableRefObject, ReactNode, SyntheticEvent } from 'react';
 import {
   ColorDisable,
+  ColorHover,
   ColorLink,
   ColorPrimary,
   ColorPrimaryHover,
-  ColorPrimaryoOpposite,
+  ColorPrimaryOpposite,
   TextSecondaryColor,
 } from '../../Constant/Color';
 import { buildClassName } from '../../util/component';
 import { useHover } from '../../hook/hoverHook';
 
-export type ButtonType = 'primary' | 'secondary' | 'danger' | 'link' | 'default';
+export type ButtonType = 'primary' | 'secondary' | 'danger' | 'link' | 'default' | 'ghost';
 
 interface Props {
   children: ReactNode;
@@ -27,7 +28,7 @@ interface Props {
 const typeStyles = {
   primary: {
     backgroundColor: ColorPrimary,
-    color: ColorPrimaryoOpposite,
+    color: ColorPrimaryOpposite,
   },
   link: {
     color: ColorLink,
@@ -41,6 +42,9 @@ const typeHoverStyles: { [name: string]: CSSProperties } = {
   link: {
     textDecoration: 'underline',
   },
+  ghost: {
+    backgroundColor: ColorHover,
+  },
 };
 
 const sizeStyles = {
@@ -50,6 +54,13 @@ const sizeStyles = {
     lineHeight: '31px',
     fontSize: 16,
     borderRadius: 6,
+  },
+  sm: {
+    padding: '0 6px',
+    height: 26,
+    lineHeight: '26px',
+    fontSize: 14,
+    borderRadius: 3,
   },
 };
 

@@ -2,6 +2,7 @@ import React, { CSSProperties, SyntheticEvent } from 'react';
 import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './IconButton.css';
+import { TextSecondaryColor } from '../../Constant/Color';
 
 export function IconButton(props: {
   icon: IconProp | any;
@@ -18,7 +19,7 @@ export function IconButton(props: {
         outline: 'none',
         borderRadius: 3,
         padding: '3px 5px',
-        color: '#888',
+        color: TextSecondaryColor,
         cursor: 'pointer',
         verticalAlign: 'middle',
         ...props.buttonStyle,

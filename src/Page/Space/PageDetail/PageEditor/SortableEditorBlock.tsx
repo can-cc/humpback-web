@@ -79,7 +79,7 @@ export const SortableEditorBlock: React.FC<SortableEditorBlockProps> = ({
     <div ref={ref} style={{ opacity }}>
       <Flex alignCenter className="PageEditorBlock-root">
         <div className="PageEditorBlock-operation">
-          <IconButton icon={faPlus} />
+          <IconButton icon={faPlus} onClick={() => createBlock('')} />
           <div style={{ display: 'inline-block' }} ref={drag}>
             <IconButton buttonStyle={{ cursor: '-webkit-grab' }} icon={faEllipsisV} />
           </div>
@@ -90,6 +90,7 @@ export const SortableEditorBlock: React.FC<SortableEditorBlockProps> = ({
           onChangeDebounce={(content) => {
             updateBlock(block.id, content);
           }}
+          placeholder={block.focusInitial ? '请输入内容' : ''}
           onReturn={() => {
             createBlock('', block.id);
           }}
