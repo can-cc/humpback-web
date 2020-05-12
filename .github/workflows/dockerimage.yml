@@ -28,7 +28,7 @@ jobs:
 
       - name: Push image
         run: |
-          IMAGE_ID=${{ secrets.docker_hub_username }}/humpback-gateway
+          IMAGE_ID=${{ secrets.docker_hub_username }}/humpback-web
           # Strip git ref prefix from version
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
           # Strip "v" prefix from tag name
