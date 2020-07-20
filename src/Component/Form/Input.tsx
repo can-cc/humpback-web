@@ -1,9 +1,9 @@
 import React, { ChangeEvent, CSSProperties, InputHTMLAttributes, useEffect, useRef } from 'react';
 import omit from 'lodash/omit';
 import { buildClassName } from '../../util/component';
-import './Input.css';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import './Input.css';
 
 export type InputType = 'normal' | 'ghost';
 

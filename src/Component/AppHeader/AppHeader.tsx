@@ -4,7 +4,7 @@ import { Humpback } from '../Humpback';
 import { List } from '../List/List';
 import { SpaceDropDownOverlay } from './SpaceDropDownOverlay';
 import { CreateSpaceModal } from '../Modal/CreateSpaceModal/CreateSpaceModal';
-
+import { useHistory } from 'react-router-dom';
 import './AppHeader.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { QuerySpaceListRequest } from '../../redux/action/space-action';
@@ -16,6 +16,7 @@ export const AppHeaderHeight = 36;
 
 export function AppHeader() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [createSpaceModalVisible, setCreateSpaceModalVisible] = useState(false);
 
   useEffect(() => {
@@ -26,6 +27,7 @@ export function AppHeader() {
   }, [dispatch]);
 
   const spaceList = useSelector((state: AppRootState) => selectSpaceList(state));
+  const goHome = () => history.push('/');
 
   return (
     <>
@@ -44,6 +46,7 @@ export function AppHeader() {
           style={{
             marginRight: 12,
           }}
+          onClick={goHome}
         />
         <List
           style={{

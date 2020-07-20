@@ -17,6 +17,7 @@ export function FormField({ name, icon, children, className = '', type = 'inline
       className={`FormField ${className}`}
       style={{
         verticalAlign: 'center',
+        position: 'relative',
       }}
     >
       {name && (

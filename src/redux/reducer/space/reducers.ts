@@ -128,14 +128,7 @@ export function reduceMovePageBlock(state: SpaceState, action: ReturnType<typeof
     AppLogger.error(new Error(`page blocks is undefined`));
     return state;
   }
-  const draggedBlock = newPage.blocks.find((b) => b.id === action.payload.blockId);
-  const draggedBlockIndex = newPage.blocks.findIndex((b) => b.id === action.payload.blockId);
-  if (draggedBlockIndex < 0) {
-    AppLogger.error(new Error(`moving block not exist.`));
-    return state;
-  }
-  newPage.blocks.splice(draggedBlockIndex, 1);
-  newPage.blocks.splice(action.payload.atIndex, 0, draggedBlock);
+  newPage.blocks = action.payload.resortedBlocks;
   return mergePageDetailToState(state, newPage);
 }
 

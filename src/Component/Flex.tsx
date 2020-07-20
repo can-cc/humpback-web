@@ -1,14 +1,15 @@
-import React, { CSSProperties, ReactNode } from 'react';
+import React, { CSSProperties, MutableRefObject, ReactNode } from "react";
 
-export function Flex(props: {
+export const Flex = React.forwardRef((props: {
   children: ReactNode;
   className?: string;
   style?: CSSProperties;
   alignCenter?: boolean;
   spaceBetween?: boolean;
-}) {
+}, ref?: MutableRefObject<HTMLDivElement>)  => {
   return (
     <div
+      ref={ref}
       className={props.className}
       style={{
         display: 'flex',
@@ -28,4 +29,4 @@ export function Flex(props: {
       {props.children}
     </div>
   );
-}
+})

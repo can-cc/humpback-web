@@ -1,4 +1,9 @@
 import { generateTemporarilyId } from '../../util/id';
+import { IPageDetail } from "../../domain/page";
+import { selectPage } from "../selector/page-selector";
+import { AppRootState } from "../reducer";
+import { AppLogger } from "../../util/logger";
+import cloneDeep from "lodash/cloneDeep";
 
 export interface CreatePageBlockPayload {
   spaceId: string;
@@ -45,33 +50,59 @@ export function UpdatePageBlockRequest(payload: UpdatePageBlockPayload) {
 }
 
 export interface MovePageBlockPayload {
+  pageDetail: IPageDetail;
   blockId: string;
-  atIndex: number;
-  pageId: string;
+  destinationIndex: number;
+  spaceId: string;
 }
 
 export function MovePageBlockRequest(payload: MovePageBlockPayload) {
+  const pageDetail: IPageDetail = payload.pageDetail;
+  let blocks = Array.from(pageDetail.blocks || []);
+
+  const draggedBlock = blocks.find((b) => b.id === payload.blockId);
+  const draggedBlockIndex = blocks.findIndex((b) => b.id === payload.blockId);
+  if (draggedBlockIndex < 0) {
+    AppLogger.error(new Error(`moving block not exist.`));
+  } else {
+    blocks.splice(draggedBlockIndex, 1);
+    blocks.splice(payload.destinationIndex, 0, draggedBlock);
+  }
   return {
     type: 'MOVE_PAGE_BLOCK',
-    payload: payload,
-  };
-}
-
-export interface ResortPageBlockPayload {
-  pageId: string;
-  spaceId: string;
-  blockIds: string[];
-}
-
-export function ResortPageBlockRequest(payload: ResortPageBlockPayload) {
-  return {
-    type: 'RESORT_PAGE_BLOCK',
     payload: {
+      pageId: pageDetail.id,
+      blockId: payload.blockId,
+      resortedBlocks: blocks,
       request: {
-        url: `/page/${payload.pageId}/blocks/resort`,
+        url: `/page/${pageDetail.id}/blocks/resort`,
         method: 'post',
-        data: payload,
-      },
+        data: {
+          pageId: pageDetail.id,
+          spaceId: payload.spaceId,
+          blockIds: blocks.map(b => b.id)
+        }
+      }
     },
+
   };
 }
+//
+// export interface ResortPageBlockPayload {
+//   pageId: string;
+//   spaceId: string;
+//   blockIds: string[];
+// }
+//
+// export function ResortPageBlockRequest(payload: ResortPageBlockPayload) {
+//   return {
+//     type: 'RESORT_PAGE_BLOCK',
+//     payload: {
+//       request: {
+//         url: `/page/${payload.pageId}/blocks/resort`,
+//         method: 'post',
+//         data: payload,
+//       },
+//     },
+//   };
+// }
