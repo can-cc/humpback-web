@@ -5,9 +5,9 @@
   align-items: flex-start !important;
 }
 
-.PageEditorBlock-root:hover .PageEditorBlock-operation {
-  visibility: visible;
-}
+/*.PageEditorBlock-root:hover .PageEditorBlock-operation, .PageEditorBlock-root.dragging .PageEditorBlock-operation {*/
+/*  visibility: visible;*/
+/*}*/
 
 .PageEditorBlock-operation {
   visibility: hidden;

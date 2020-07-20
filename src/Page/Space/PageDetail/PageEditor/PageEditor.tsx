@@ -6,14 +6,16 @@ import { AppRootState } from '../../../../redux/reducer';
 import {
   CreatePageBlockRequest,
   MovePageBlockRequest,
-  ResortPageBlockRequest,
-  UpdatePageBlockRequest,
+  UpdatePageBlockRequest
 } from '../../../../redux/action/page-block-action';
-import { EditorArrayContainer } from './EditorArrayContainer';
-import { SortableEditorBlock } from './SortableEditorBlock';
-import { DndProvider } from 'react-dnd';
-import Backend from 'react-dnd-html5-backend';
+import { DraggableEditorBlock } from './SortableEditorBlock';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+
 import './PageEditor.css';
+
+const getListStyle = isDraggingOver => ({
+  background: isDraggingOver ? 'lightblue' : 'lightgrey'
+});
 
 export function PageEditor(props: { spaceId: string; pageId: string; isNew: boolean }) {
   const { spaceId, pageId } = props;
@@ -28,7 +30,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
           pageId: pageId,
           content,
           previousBlockId,
-          focusInitial,
+          focusInitial
         })
       );
     },
@@ -42,31 +44,19 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
           spaceId: spaceId,
           pageId: pageId,
           blockId,
-          content: content,
+          content: content
         })
       );
     },
     [dispatch, pageId, spaceId]
   );
 
-  const findBlockIndex = (id: string): number => {
-    if (!pageDetail.blocks) {
-      return -1;
+  const onDragEnd = result => {
+    if (!result.destination) {
+      return;
     }
-    return pageDetail.blocks.findIndex((b) => b.id === id);
-  };
-
-  const moveBlock = (blockId: string, atIndex: number) => {
-    dispatch(MovePageBlockRequest({ blockId, atIndex, pageId: pageId }));
-  };
-
-  const moveBlockEnd = () => {
     dispatch(
-      ResortPageBlockRequest({
-        spaceId: spaceId,
-        pageId: pageId,
-        blockIds: pageDetail.blocks.map((b) => b.id),
-      })
+      MovePageBlockRequest({  spaceId: spaceId, pageDetail: pageDetail, blockId: result.draggableId, destinationIndex: result.destination.index })
     );
   };
 
@@ -80,28 +70,32 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
     <div
       className="PageEditor"
       style={{
-        width: '100%',
+        width: '100%'
       }}
     >
-      <DndProvider backend={Backend}>
-        <EditorArrayContainer>
-          {pageDetail.blocks &&
-            pageDetail.blocks.map((block: IPageBlock) => {
-              return (
-                <SortableEditorBlock
-                  key={block.id}
-                  block={block}
-                  findBlockIndex={findBlockIndex}
-                  moveBlockEnd={moveBlockEnd}
-                  moveBlock={moveBlock}
-                  createBlock={createBlock}
-                  updateBlock={updateBlock}
-                  isOnly={pageDetail.blocks.length === 1}
-                />
-              );
-            })}
-        </EditorArrayContainer>
-      </DndProvider>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="droppable">
+          {(provided, snapshot) => (
+            <div {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
+              {pageDetail.blocks &&
+                pageDetail.blocks.map((block: IPageBlock, index: number) => {
+                  return (
+                    <DraggableEditorBlock
+                      key={block.id}
+                      block={block}
+                      isDraggingOver={snapshot.isDraggingOver}
+                      index={index}
+                      createBlock={createBlock}
+                      updateBlock={updateBlock}
+                      isOnly={pageDetail.blocks.length === 1}
+                    />
+                  );
+                })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
     </div>
   );
 }
