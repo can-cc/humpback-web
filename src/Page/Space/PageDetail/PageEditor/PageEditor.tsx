@@ -14,7 +14,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import './PageEditor.css';
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey'
+  // background: isDraggingOver ? 'lightblue' : 'lightgrey'
 });
 
 export function PageEditor(props: { spaceId: string; pageId: string; isNew: boolean }) {

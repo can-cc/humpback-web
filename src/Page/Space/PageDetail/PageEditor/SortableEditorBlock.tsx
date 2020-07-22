@@ -50,14 +50,22 @@ export function DraggableEditorBlock({
         >
           <Flex alignCenter ref={hoverRef as MutableRefObject<HTMLDivElement>} className="PageEditorBlock-root">
             <div
+              {...provided.dragHandleProps}
               className="PageEditorBlock-operation"
               style={{
-                visibility:  snapshot.isDragging ? 'visible' : isDraggingOver ? 'hidden' :  isHovered ? 'visible' : 'hidden'
+                visibility: snapshot.isDragging
+                  ? 'visible'
+                  : isDraggingOver
+                  ? 'hidden'
+                  : isHovered
+                  ? 'visible'
+                  : 'hidden',
+                cursor: '-webkit-grab'
               }}
             >
               <IconButton icon={faPlus} onClick={() => createBlock('')} />
-              <div style={{ display: 'inline-block' }} {...provided.dragHandleProps}>
-                <IconButton buttonStyle={{ cursor: '-webkit-grab' }} icon={faEllipsisV} />
+              <div style={{ display: 'inline-block', cursor: '-webkit-grab' }}>
+                <IconButton icon={faEllipsisV} />
               </div>
             </div>
             <RichEditorBlock
