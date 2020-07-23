@@ -29,4 +29,4 @@ export const Flex = React.forwardRef((props: {
       {props.children}
     </div>
   );
-})
+});

@@ -7,7 +7,12 @@ export function BlockMenu({ isOpen, closeModal, afterOpenModal }) {
       isOpen={isOpen}
       onAfterOpen={afterOpenModal}
       onRequestClose={closeModal}
-      style={{}}
+      style={{
+        overlay: {
+          backgroundColor: 'transparent'
+        }
+      }}
+
       contentLabel="Example Modal"
     >
       <h2>Hello</h2>

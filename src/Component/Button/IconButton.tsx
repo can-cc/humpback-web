@@ -1,18 +1,19 @@
-import React, { CSSProperties, SyntheticEvent } from 'react';
+import React, { CSSProperties, MutableRefObject, SyntheticEvent } from "react";
 import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './IconButton.css';
 import { TextSecondaryColor } from '../../Constant/Color';
 
-export function IconButton(props: {
+export const IconButton = React.forwardRef((props: {
   icon: IconProp | any;
   iconSize?: SizeProp;
   iconStyle?: CSSProperties;
   buttonStyle?: CSSProperties;
   onClick?: (e: SyntheticEvent) => void;
-}) {
+}, ref?: MutableRefObject<HTMLButtonElement>) => {
   return (
     <button
+      ref={ref}
       className="IconButton"
       style={{
         border: 'none',
@@ -35,4 +36,4 @@ export function IconButton(props: {
       />
     </button>
   );
-}
+});
