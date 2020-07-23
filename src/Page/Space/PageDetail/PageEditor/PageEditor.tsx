@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { IPageBlock, IPageDetail } from '../../../../domain/page';
 import { selectPage } from '../../../../redux/selector/page-selector';
@@ -12,6 +12,7 @@ import { DraggableEditorBlock } from './SortableEditorBlock';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import './PageEditor.css';
+import { BlockMenu } from "../BlockMenu/BlockMenu";
 
 const getListStyle = isDraggingOver => ({
   // background: isDraggingOver ? 'lightblue' : 'lightgrey'
@@ -20,6 +21,7 @@ const getListStyle = isDraggingOver => ({
 export function PageEditor(props: { spaceId: string; pageId: string; isNew: boolean }) {
   const { spaceId, pageId } = props;
   const dispatch = useDispatch();
+  const [isBlockMenuOpen, setIsBlockMenuOpen] = useState(false);
   const pageDetail = useSelector((state: AppRootState) => selectPage(state, pageId)) as IPageDetail | undefined;
 
   const createBlock = useCallback(
@@ -87,6 +89,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
                       index={index}
                       createBlock={createBlock}
                       updateBlock={updateBlock}
+                      onOpenMenu={() => setIsBlockMenuOpen(true)}
                       isOnly={pageDetail.blocks.length === 1}
                     />
                   );
@@ -96,6 +99,10 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
           )}
         </Droppable>
       </DragDropContext>
+      <BlockMenu
+        isOpen={isBlockMenuOpen}
+        closeModal={() => setIsBlockMenuOpen(false)}
+        afterOpenModal={() => {}} />
     </div>
   );
 }
