@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useCallback, useRef, useState } from 'react';
+import React, { createRef, MutableRefObject, useCallback, useRef, useState } from "react";
 import { IPageBlock } from '../../../../domain/page';
 import { RichEditorBlock } from '../../../../Component/Editor/RichEditorBlock';
 import { Flex } from '../../../../Component/Flex';
@@ -12,7 +12,7 @@ interface SortableEditorBlockProps {
   index: number;
   updateBlock: Function;
   createBlock: Function;
-  onOpenMenu: () => void;
+  onOpenMenu: (rect: DOMRect) => void;
   isOnly: boolean;
   isDraggingOver: boolean;
 }
@@ -34,6 +34,12 @@ export function DraggableEditorBlock({
 }: SortableEditorBlockProps) {
   const [editorFocus, setEditorFocus] = useState(false);
   const [hoverRef, isHovered] = useHover();
+  const menuButtonRef = createRef<HTMLDivElement>();
+
+  const onMenuDivClick = () => {
+    const menuButtonRect = menuButtonRef.current.getBoundingClientRect();
+    onOpenMenu(menuButtonRect);
+  };
 
   const onChangeDebounce = useCallback(
     content => {
@@ -66,8 +72,8 @@ export function DraggableEditorBlock({
               }}
             >
               <IconButton icon={faPlus} onClick={() => createBlock('', block.id)} />
-              <div style={{ display: 'inline-block', cursor: '-webkit-grab' }}>
-                <IconButton icon={faEllipsisV} onClick={onOpenMenu} />
+              <div ref={menuButtonRef} style={{ display: 'inline-block', cursor: '-webkit-grab' }}>
+                <IconButton icon={faEllipsisV} onClick={onMenuDivClick} />
               </div>
             </div>
             <RichEditorBlock

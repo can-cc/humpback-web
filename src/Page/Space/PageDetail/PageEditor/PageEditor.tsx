@@ -22,6 +22,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
   const { spaceId, pageId } = props;
   const dispatch = useDispatch();
   const [isBlockMenuOpen, setIsBlockMenuOpen] = useState(false);
+  const [menuModalPosition, setMenuModalPosition] = useState({top: 0, left: 0});
   const pageDetail = useSelector((state: AppRootState) => selectPage(state, pageId)) as IPageDetail | undefined;
 
   const createBlock = useCallback(
@@ -89,7 +90,10 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
                       index={index}
                       createBlock={createBlock}
                       updateBlock={updateBlock}
-                      onOpenMenu={() => setIsBlockMenuOpen(true)}
+                      onOpenMenu={(rect: DOMRect) => {
+                        setIsBlockMenuOpen(true);
+                        setMenuModalPosition({top: rect.top, left: rect.left})
+                      }}
                       isOnly={pageDetail.blocks.length === 1}
                     />
                   );
@@ -102,7 +106,12 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
       <BlockMenu
         isOpen={isBlockMenuOpen}
         closeModal={() => setIsBlockMenuOpen(false)}
-        afterOpenModal={() => {}} />
+        afterOpenModal={() => {}}
+        position={{
+          top: menuModalPosition.top,
+          left: menuModalPosition.left
+        }}
+      />
     </div>
   );
 }

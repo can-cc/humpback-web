@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from '../../../../Component/Modal/Modal';
 
-export function BlockMenu({ isOpen, closeModal, afterOpenModal }) {
+export function BlockMenu({ isOpen, closeModal, afterOpenModal, position }) {
   return (
     <Modal
       isOpen={isOpen}
@@ -10,6 +10,13 @@ export function BlockMenu({ isOpen, closeModal, afterOpenModal }) {
       style={{
         overlay: {
           backgroundColor: 'transparent'
+        },
+        content: {
+          top: position.top,
+          left: position.left,
+          bottom: "unset",
+          right: "unset",
+          transform: "unset"
         }
       }}
 
