@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from '../../../../Component/Modal/Modal';
 
-export function BlockMenu({ isOpen, closeModal, afterOpenModal, position }) {
+export function MoreBlockMenu({ isOpen, closeModal, afterOpenModal, position }) {
   return (
     <Modal
       isOpen={isOpen}

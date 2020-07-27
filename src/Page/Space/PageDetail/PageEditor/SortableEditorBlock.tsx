@@ -11,8 +11,9 @@ interface SortableEditorBlockProps {
   block: IPageBlock;
   index: number;
   updateBlock: Function;
+  onOpenAddMenu: Function;
   createBlock: Function;
-  onOpenMenu: (rect: DOMRect) => void;
+  onOpenMoreMenu: (rect: DOMRect) => void;
   isOnly: boolean;
   isDraggingOver: boolean;
 }
@@ -27,18 +28,19 @@ export function DraggableEditorBlock({
   block,
   index,
   updateBlock,
-  isDraggingOver,
-  createBlock,
-  onOpenMenu,
+  isDraggingOver, createBlock,
+  onOpenAddMenu,
+  onOpenMoreMenu,
   isOnly
 }: SortableEditorBlockProps) {
   const [editorFocus, setEditorFocus] = useState(false);
   const [hoverRef, isHovered] = useHover();
   const menuButtonRef = createRef<HTMLDivElement>();
+  const addButtonRef = createRef<HTMLDivElement>();
 
   const onMenuDivClick = () => {
     const menuButtonRect = menuButtonRef.current.getBoundingClientRect();
-    onOpenMenu(menuButtonRect);
+    onOpenMoreMenu(menuButtonRect);
   };
 
   const onChangeDebounce = useCallback(
@@ -71,7 +73,12 @@ export function DraggableEditorBlock({
                 cursor: '-webkit-grab'
               }}
             >
-              <IconButton icon={faPlus} onClick={() => createBlock('', block.id)} />
+              <div ref={addButtonRef} style={{ display: 'inline-block' }}>
+                <IconButton icon={faPlus} onClick={() => {
+                  onOpenAddMenu('', block.id, addButtonRef.current.getBoundingClientRect())
+                }} />
+              </div>
+
               <div ref={menuButtonRef} style={{ display: 'inline-block', cursor: '-webkit-grab' }}>
                 <IconButton icon={faEllipsisV} onClick={onMenuDivClick} />
               </div>

@@ -12,7 +12,8 @@ import { DraggableEditorBlock } from './SortableEditorBlock';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import './PageEditor.css';
-import { BlockMenu } from "../BlockMenu/BlockMenu";
+import { MoreBlockMenu } from "../BlockMenu/MoreBlockMenu";
+import { AddBlockMenu } from "../BlockMenu/AddBlockMenu";
 
 const getListStyle = isDraggingOver => ({
   // background: isDraggingOver ? 'lightblue' : 'lightgrey'
@@ -21,8 +22,13 @@ const getListStyle = isDraggingOver => ({
 export function PageEditor(props: { spaceId: string; pageId: string; isNew: boolean }) {
   const { spaceId, pageId } = props;
   const dispatch = useDispatch();
-  const [isBlockMenuOpen, setIsBlockMenuOpen] = useState(false);
-  const [menuModalPosition, setMenuModalPosition] = useState({top: 0, left: 0});
+
+  const [isMoreBlockMenuOpen, setIsMoreBlockMenuOpen] = useState(false);
+  const [isAddBlockMenuOpen, setIsAddBlockMenuOpen] = useState(false);
+  const [moreMenuModalPosition, setMoreMenuModalPosition] = useState({top: 0, left: 0});
+  const [addMenuModalPosition, setAddMenuModalPosition] = useState({top: 0, left: 0});
+
+
   const pageDetail = useSelector((state: AppRootState) => selectPage(state, pageId)) as IPageDetail | undefined;
 
   const createBlock = useCallback(
@@ -88,11 +94,12 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
                       block={block}
                       isDraggingOver={snapshot.isDraggingOver}
                       index={index}
-                      createBlock={createBlock}
                       updateBlock={updateBlock}
-                      onOpenMenu={(rect: DOMRect) => {
-                        setIsBlockMenuOpen(true);
-                        setMenuModalPosition({top: rect.top, left: rect.left})
+                      createBlock={createBlock}
+                      onOpenAddMenu={createBlock}
+                      onOpenMoreMenu={(rect: DOMRect) => {
+                        setIsMoreBlockMenuOpen(true);
+                        setMoreMenuModalPosition({top: rect.top, left: rect.left})
                       }}
                       isOnly={pageDetail.blocks.length === 1}
                     />
@@ -103,13 +110,22 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
           )}
         </Droppable>
       </DragDropContext>
-      <BlockMenu
-        isOpen={isBlockMenuOpen}
-        closeModal={() => setIsBlockMenuOpen(false)}
+      <MoreBlockMenu
+        isOpen={isMoreBlockMenuOpen}
+        closeModal={() => setIsMoreBlockMenuOpen(false)}
         afterOpenModal={() => {}}
         position={{
-          top: menuModalPosition.top,
-          left: menuModalPosition.left
+          top: moreMenuModalPosition.top,
+          left: moreMenuModalPosition.left
+        }}
+      />
+      <AddBlockMenu
+        isOpen={isAddBlockMenuOpen}
+        closeModal={() => setIsAddBlockMenuOpen(false)}
+        afterOpenModal={() => {}}
+        position={{
+          top: addMenuModalPosition.top,
+          left: addMenuModalPosition.left
         }}
       />
     </div>
