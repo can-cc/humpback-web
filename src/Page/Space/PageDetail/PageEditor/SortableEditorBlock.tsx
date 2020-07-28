@@ -35,11 +35,11 @@ export function DraggableEditorBlock({
 }: SortableEditorBlockProps) {
   const [editorFocus, setEditorFocus] = useState(false);
   const [hoverRef, isHovered] = useHover();
-  const menuButtonRef = createRef<HTMLDivElement>();
+  const moreButtonRef = createRef<HTMLDivElement>();
   const addButtonRef = createRef<HTMLDivElement>();
 
   const onMenuDivClick = () => {
-    const menuButtonRect = menuButtonRef.current.getBoundingClientRect();
+    const menuButtonRect = moreButtonRef.current.getBoundingClientRect();
     onOpenMoreMenu(menuButtonRect);
   };
 
@@ -75,11 +75,11 @@ export function DraggableEditorBlock({
             >
               <div ref={addButtonRef} style={{ display: 'inline-block' }}>
                 <IconButton icon={faPlus} onClick={() => {
-                  onOpenAddMenu('', block.id, addButtonRef.current.getBoundingClientRect())
+                  onOpenAddMenu(addButtonRef.current.getBoundingClientRect())
                 }} />
               </div>
 
-              <div ref={menuButtonRef} style={{ display: 'inline-block', cursor: '-webkit-grab' }}>
+              <div ref={moreButtonRef} style={{ display: 'inline-block', cursor: '-webkit-grab' }}>
                 <IconButton icon={faEllipsisV} onClick={onMenuDivClick} />
               </div>
             </div>

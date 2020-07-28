@@ -96,7 +96,10 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
                       index={index}
                       updateBlock={updateBlock}
                       createBlock={createBlock}
-                      onOpenAddMenu={createBlock}
+                      onOpenAddMenu={(rect: DOMRect) => {
+                        setIsAddBlockMenuOpen(true);
+                        setAddMenuModalPosition({top: rect.top, left: rect.left})
+                      }}
                       onOpenMoreMenu={(rect: DOMRect) => {
                         setIsMoreBlockMenuOpen(true);
                         setMoreMenuModalPosition({top: rect.top, left: rect.left})

@@ -87,22 +87,3 @@ export function MovePageBlockRequest(payload: MovePageBlockPayload) {
 
   };
 }
-//
-// export interface ResortPageBlockPayload {
-//   pageId: string;
-//   spaceId: string;
-//   blockIds: string[];
-// }
-//
-// export function ResortPageBlockRequest(payload: ResortPageBlockPayload) {
-//   return {
-//     type: 'RESORT_PAGE_BLOCK',
-//     payload: {
-//       request: {
-//         url: `/page/${payload.pageId}/blocks/resort`,
-//         method: 'post',
-//         data: payload,
-//       },
-//     },
-//   };
-// }
