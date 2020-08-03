@@ -1,9 +1,6 @@
 import { generateTemporarilyId } from '../../util/id';
 import { IPageDetail } from "../../domain/page";
-import { selectPage } from "../selector/page-selector";
-import { AppRootState } from "../reducer";
 import { AppLogger } from "../../util/logger";
-import cloneDeep from "lodash/cloneDeep";
 
 export interface CreatePageBlockPayload {
   spaceId: string;
@@ -86,4 +83,24 @@ export function MovePageBlockRequest(payload: MovePageBlockPayload) {
     },
 
   };
+}
+
+export function UploadPageImageRequest(payload: {
+  pageId: string,
+  spaceId: string,
+  data
+}) {
+  const formData = new FormData();
+  formData.append("data", payload.data);
+  formData.append("spaceId", payload.spaceId)
+  return {
+    type: 'UPDATE_PAGE_BLOCK',
+    payload: {
+      request: {
+        url: `/page/${payload.pageId}/block/image`,
+        method: 'post',
+        data: formData,
+      },
+    },
+  }
 }

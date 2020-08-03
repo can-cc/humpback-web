@@ -2,10 +2,10 @@ import React, { createRef, ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
-  onUpload: (result: string | ArrayBuffer | null) => void
+  onUpload: (result) => void
 }
 
-export function ImageUploader({ children, onUpload }) {
+export function ImageUploader({ children, onUpload }: Props) {
   const inputRef = createRef<HTMLInputElement>();
 
   const onClick = () => {
@@ -16,12 +16,8 @@ export function ImageUploader({ children, onUpload }) {
     if (!inputRef.current.files) {
       return;
     }
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      onUpload(e.target.result)
-      inputRef.current.value = '';
-    };
-    reader.readAsArrayBuffer(inputRef.current.files[0]);
+    onUpload(inputRef.current.files[0])
+    inputRef.current.value = '';
   };
 
   return (

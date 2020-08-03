@@ -70,8 +70,8 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
   };
 
   useEffect(() => {
-    if (pageDetail && pageDetail.blocks === null) {
-      createBlock('', undefined, false);
+    if (pageDetail && !pageDetail.blocks) {
+       createBlock('', undefined, false);
     }
   }, [createBlock, pageDetail]);
 
@@ -123,6 +123,8 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
         }}
       />
       <AddBlockMenu
+        spaceId={spaceId}
+        pageId={pageId}
         isOpen={isAddBlockMenuOpen}
         closeModal={() => setIsAddBlockMenuOpen(false)}
         afterOpenModal={() => {}}

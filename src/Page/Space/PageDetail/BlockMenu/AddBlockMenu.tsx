@@ -3,11 +3,17 @@ import { Modal } from '../../../../Component/Modal/Modal';
 import { List, ListItem } from '../../../../Component/List/List';
 import { Button } from '../../../../Component/Button/Button';
 import { ImageUploader } from "../../../../Component/Upload/ImageUploader";
+import { useDispatch } from "react-redux";
+import { UploadPageImageRequest } from "../../../../redux/action/page-block-action";
 
-export function AddBlockMenu({ isOpen, closeModal, afterOpenModal, position }) {
-
+export function AddBlockMenu({ isOpen, closeModal, afterOpenModal, position, pageId, spaceId }) {
+  const dispatch = useDispatch();
   const onImageUpload = (result) => {
-    console.log(result);
+    dispatch(UploadPageImageRequest({
+      spaceId: spaceId,
+      pageId: pageId,
+      data: result
+    }))
   }
 
   return (
