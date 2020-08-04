@@ -131,6 +131,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
         spaceId={spaceId}
         pageId={pageId}
         isOpen={isAddBlockMenuOpen}
+        createBlock={createBlock}
         closeModal={() => setIsAddBlockMenuOpen(false)}
         afterOpenModal={() => {}}
         position={{

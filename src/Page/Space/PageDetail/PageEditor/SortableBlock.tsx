@@ -1,13 +1,14 @@
-import React, { createRef, MutableRefObject, useCallback, useRef, useState } from "react";
+import React, { createRef, MutableRefObject, useCallback, useState } from 'react';
 import { IPageBlock } from '../../../../domain/page';
-import { RichEditorBlock } from '../../../../Component/Editor/RichEditorBlock';
+import { RichEditor } from '../../../../Component/Editor/RichEditor';
 import { Flex } from '../../../../Component/Flex';
 import { IconButton } from '../../../../Component/Button/IconButton';
 import { faEllipsisV, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Draggable } from 'react-beautiful-dnd';
 import { useHover } from '../../../../hook/hoverHook';
+import { Block } from './Block';
 
-interface SortableEditorBlockProps {
+interface Props {
   block: IPageBlock;
   index: number;
   updateBlock: Function;
@@ -28,12 +29,12 @@ export function SortableBlock({
   block,
   index,
   updateBlock,
-  isDraggingOver, createBlock,
+  isDraggingOver,
+  createBlock,
   onOpenAddMenu,
   onOpenMoreMenu,
   isOnly
-}: SortableEditorBlockProps) {
-  const [editorFocus, setEditorFocus] = useState(false);
+}: Props) {
   const [hoverRef, isHovered] = useHover();
   const moreButtonRef = createRef<HTMLDivElement>();
   const addButtonRef = createRef<HTMLDivElement>();
@@ -74,9 +75,12 @@ export function SortableBlock({
               }}
             >
               <div ref={addButtonRef} style={{ display: 'inline-block' }}>
-                <IconButton icon={faPlus} onClick={() => {
-                  onOpenAddMenu(addButtonRef.current.getBoundingClientRect())
-                }} />
+                <IconButton
+                  icon={faPlus}
+                  onClick={() => {
+                    onOpenAddMenu(addButtonRef.current.getBoundingClientRect());
+                  }}
+                />
               </div>
 
               <div ref={moreButtonRef} style={{ display: 'inline-block', cursor: '-webkit-grab' }}>
@@ -84,17 +88,7 @@ export function SortableBlock({
               </div>
             </div>
 
-            <RichEditorBlock
-              focusInitial={block.focusInitial}
-              initContent={block.content}
-              onChangeDebounce={onChangeDebounce}
-              placeholder={isOnly || editorFocus ? '请输入内容' : ''}
-              onFocus={() => setEditorFocus(true)}
-              onBlur={() => setEditorFocus(false)}
-              onReturn={() => {
-                createBlock('', block.id);
-              }}
-            />
+            <Block block={block} isOnly={isOnly} createBlock={createBlock} onChangeDebounce={onChangeDebounce} />
           </Flex>
         </div>
       )}

@@ -4,7 +4,7 @@ import { ContentState, DraftHandleValue, Editor, EditorState } from 'draft-js';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-export function RichEditorBlock(props: {
+export function RichEditor(props: {
   onReturn: (content: string) => void;
   focusInitial: boolean;
   initContent: string;

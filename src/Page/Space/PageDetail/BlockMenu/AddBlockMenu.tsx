@@ -2,21 +2,32 @@ import React from 'react';
 import { Modal } from '../../../../Component/Modal/Modal';
 import { List, ListItem } from '../../../../Component/List/List';
 import { Button } from '../../../../Component/Button/Button';
-import { ImageUploader } from "../../../../Component/Upload/ImageUploader";
-import { useDispatch } from "react-redux";
-import { UploadPageImageRequest } from "../../../../redux/action/page-block-action";
+import { ImageUploader } from '../../../../Component/Upload/ImageUploader';
+import { useDispatch } from 'react-redux';
+import { UploadPageImageRequest } from '../../../../redux/action/page-block-action';
 
-export function AddBlockMenu({ isOpen, closeModal, afterOpenModal, position, pageId, spaceId, belongBlockId }) {
+export function AddBlockMenu({
+  isOpen,
+  closeModal,
+  afterOpenModal,
+  position,
+  pageId,
+  spaceId,
+  belongBlockId,
+  createBlock
+}) {
   const dispatch = useDispatch();
 
-  const onImageUpload = (result) => {
-    dispatch(UploadPageImageRequest({
-      previousBlockId: belongBlockId,
-      spaceId: spaceId,
-      pageId: pageId,
-      data: result
-    }))
-  }
+  const onImageUpload = result => {
+    dispatch(
+      UploadPageImageRequest({
+        previousBlockId: belongBlockId,
+        spaceId: spaceId,
+        pageId: pageId,
+        data: result
+      })
+    );
+  };
 
   return (
     <Modal
@@ -39,7 +50,7 @@ export function AddBlockMenu({ isOpen, closeModal, afterOpenModal, position, pag
     >
       <List>
         <ListItem>
-          <Button>文字</Button>
+          <Button onClick={() => createBlock('', belongBlockId, true)}>文字</Button>
         </ListItem>
         <ListItem>
           <ImageUploader onUpload={onImageUpload}>
