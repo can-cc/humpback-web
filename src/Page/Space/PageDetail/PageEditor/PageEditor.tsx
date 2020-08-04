@@ -27,6 +27,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
   const [isAddBlockMenuOpen, setIsAddBlockMenuOpen] = useState(false);
   const [moreMenuModalPosition, setMoreMenuModalPosition] = useState({top: 0, left: 0});
   const [addMenuModalPosition, setAddMenuModalPosition] = useState({top: 0, left: 0});
+  const [operatingBlockId, setOperatingBlockId] = useState();
 
 
   const pageDetail = useSelector((state: AppRootState) => selectPage(state, pageId)) as IPageDetail | undefined;
@@ -70,7 +71,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
   };
 
   useEffect(() => {
-    if (pageDetail && !pageDetail.blocks) {
+    if (pageDetail && pageDetail.blocks && !pageDetail.blocks.length) {
        createBlock('', undefined, false);
     }
   }, [createBlock, pageDetail]);
@@ -98,10 +99,12 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
                       createBlock={createBlock}
                       onOpenAddMenu={(rect: DOMRect) => {
                         setIsAddBlockMenuOpen(true);
+                        setOperatingBlockId(block.id);
                         setAddMenuModalPosition({top: rect.top, left: rect.left})
                       }}
                       onOpenMoreMenu={(rect: DOMRect) => {
                         setIsMoreBlockMenuOpen(true);
+                        setOperatingBlockId(block.id);
                         setMoreMenuModalPosition({top: rect.top, left: rect.left})
                       }}
                       isOnly={pageDetail.blocks.length === 1}
@@ -113,6 +116,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
           )}
         </Droppable>
       </DragDropContext>
+
       <MoreBlockMenu
         isOpen={isMoreBlockMenuOpen}
         closeModal={() => setIsMoreBlockMenuOpen(false)}
@@ -123,6 +127,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
         }}
       />
       <AddBlockMenu
+        belongBlockId={operatingBlockId}
         spaceId={spaceId}
         pageId={pageId}
         isOpen={isAddBlockMenuOpen}

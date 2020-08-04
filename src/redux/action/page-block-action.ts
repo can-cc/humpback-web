@@ -81,18 +81,19 @@ export function MovePageBlockRequest(payload: MovePageBlockPayload) {
         }
       }
     },
-
   };
 }
 
 export function UploadPageImageRequest(payload: {
   pageId: string,
   spaceId: string,
+  previousBlockId?: string,
   data
 }) {
   const formData = new FormData();
   formData.append("data", payload.data);
   formData.append("spaceId", payload.spaceId)
+  formData.append("previousBlockId", payload.previousBlockId)
   return {
     type: 'UPDATE_PAGE_BLOCK',
     payload: {

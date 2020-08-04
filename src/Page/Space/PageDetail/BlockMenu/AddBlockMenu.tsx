@@ -6,10 +6,12 @@ import { ImageUploader } from "../../../../Component/Upload/ImageUploader";
 import { useDispatch } from "react-redux";
 import { UploadPageImageRequest } from "../../../../redux/action/page-block-action";
 
-export function AddBlockMenu({ isOpen, closeModal, afterOpenModal, position, pageId, spaceId }) {
+export function AddBlockMenu({ isOpen, closeModal, afterOpenModal, position, pageId, spaceId, belongBlockId }) {
   const dispatch = useDispatch();
+
   const onImageUpload = (result) => {
     dispatch(UploadPageImageRequest({
+      previousBlockId: belongBlockId,
       spaceId: spaceId,
       pageId: pageId,
       data: result
