@@ -24,7 +24,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   ...draggableStyle
 });
 
-export function DraggableEditorBlock({
+export function SortableBlock({
   block,
   index,
   updateBlock,
@@ -83,6 +83,7 @@ export function DraggableEditorBlock({
                 <IconButton icon={faEllipsisV} onClick={onMenuDivClick} />
               </div>
             </div>
+
             <RichEditorBlock
               focusInitial={block.focusInitial}
               initContent={block.content}

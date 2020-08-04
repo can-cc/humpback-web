@@ -8,7 +8,7 @@ import {
   MovePageBlockRequest,
   UpdatePageBlockRequest
 } from '../../../../redux/action/page-block-action';
-import { DraggableEditorBlock } from './SortableEditorBlock';
+import { SortableBlock } from './SortableBlock';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import './PageEditor.css';
@@ -90,7 +90,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
               {pageDetail.blocks &&
                 pageDetail.blocks.map((block: IPageBlock, index: number) => {
                   return (
-                    <DraggableEditorBlock
+                    <SortableBlock
                       key={block.id}
                       block={block}
                       isDraggingOver={snapshot.isDraggingOver}
