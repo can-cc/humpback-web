@@ -29,6 +29,11 @@ export function AddBlockMenu({
     );
   };
 
+  const onCreateBlock = () => {
+    createBlock('', belongBlockId, true);
+    closeModal();
+  }
+
   return (
     <Modal
       isOpen={isOpen}
@@ -50,7 +55,7 @@ export function AddBlockMenu({
     >
       <List>
         <ListItem>
-          <Button onClick={() => createBlock('', belongBlockId, true)}>文字</Button>
+          <Button onClick={onCreateBlock}>文字</Button>
         </ListItem>
         <ListItem>
           <ImageUploader onUpload={onImageUpload}>

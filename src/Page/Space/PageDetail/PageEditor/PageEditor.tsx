@@ -15,7 +15,7 @@ import './PageEditor.css';
 import { MoreBlockMenu } from "../BlockMenu/MoreBlockMenu";
 import { AddBlockMenu } from "../BlockMenu/AddBlockMenu";
 
-const getListStyle = isDraggingOver => ({
+const getListStyle = (/*isDraggingOver*/) => ({
   // background: isDraggingOver ? 'lightblue' : 'lightgrey'
 });
 
@@ -86,7 +86,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
-            <div {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
+            <div {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(/*snapshot.isDraggingOver*/)}>
               {pageDetail.blocks &&
                 pageDetail.blocks.map((block: IPageBlock, index: number) => {
                   return (

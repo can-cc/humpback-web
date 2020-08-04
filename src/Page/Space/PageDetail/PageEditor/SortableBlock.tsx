@@ -1,6 +1,5 @@
 import React, { createRef, MutableRefObject, useCallback, useState } from 'react';
 import { IPageBlock } from '../../../../domain/page';
-import { RichEditor } from '../../../../Component/Editor/RichEditor';
 import { Flex } from '../../../../Component/Flex';
 import { IconButton } from '../../../../Component/Button/IconButton';
 import { faEllipsisV, faPlus } from '@fortawesome/free-solid-svg-icons';
