@@ -1,8 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ContentState, DraftHandleValue, Editor, EditorState } from 'draft-js';
+import Draft, {
+  ContentState,
+  DraftHandleValue,
+  Editor,
+  EditorState,
+  getVisibleSelectionRect,
+  RichUtils
+} from 'draft-js';
 
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { RichEditorToolBar } from './RichEditorToolBar';
 
 export function RichEditor(props: {
   onReturn: (content: string) => void;
@@ -24,15 +32,35 @@ export function RichEditor(props: {
     placeholder,
     onChange,
     changeDebounceTime,
-    onChangeDebounce,
+    onChangeDebounce
   } = props;
 
   const changeRef$ = useRef(new Subject<EditorState>());
+  const [toolbarPosition, setToolbarPosition] = useState({top: 0, left: 0});
+  const containerRef = useRef<HTMLDivElement>();
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(ContentState.createFromText(initContent))
   );
-  const handleOnChange = (changedEditorState) => {
+  const [isSelected, setIsSelected] = useState(false);
+
+  const handleOnChange = changedEditorState => {
     setEditorState(changedEditorState);
+    const selectSection = changedEditorState.getSelection();
+    const isSelected = selectSection.getStartOffset() !== selectSection.getEndOffset();
+    setIsSelected(isSelected);
+
+    if (isSelected) {
+      const selectionRect = getVisibleSelectionRect(window);
+      if (selectionRect) {
+        const containerRect = containerRef.current.getBoundingClientRect();
+
+        setToolbarPosition({
+          top: selectionRect.top - containerRect.top,
+          left: selectionRect.left - containerRect.left + selectionRect.width / 2
+        })
+      }
+    }
+
     if (editorState.getCurrentContent().getPlainText() === changedEditorState.getCurrentContent().getPlainText()) {
       return;
     }
@@ -77,14 +105,28 @@ export function RichEditor(props: {
   }, [changeDebounceTime, onChangeDebounce]);
 
   return (
-    <Editor
-      ref={editorRef}
-      placeholder={placeholder}
-      editorState={editorState}
-      onChange={handleOnChange}
-      onFocus={handleOnFocus}
-      onBlur={handleOnBlur}
-      handleReturn={handleReturn}
-    />
+    <div
+      ref={containerRef}
+      style={{
+        position: 'relative'
+      }}
+    >
+      <RichEditorToolBar
+        position={toolbarPosition}
+        isOpen={isSelected}
+        changeInlineStyle={style => {
+          setEditorState(RichUtils.toggleInlineStyle(editorState, style));
+        }}
+      />
+      <Editor
+        ref={editorRef}
+        placeholder={placeholder}
+        editorState={editorState}
+        onChange={handleOnChange}
+        onFocus={handleOnFocus}
+        onBlur={handleOnBlur}
+        handleReturn={handleReturn}
+      />
+    </div>
   );
 }
