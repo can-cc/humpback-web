@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Draft, {
   ContentState,
+  convertFromRaw,
+  convertToRaw,
   DraftHandleValue,
   Editor,
   EditorState,
   getVisibleSelectionRect,
+  RawDraftContentState,
   RichUtils
 } from 'draft-js';
 
@@ -13,7 +16,7 @@ import { debounceTime } from 'rxjs/operators';
 import { RichEditorToolBar } from './Toolbar/RichEditorToolBar';
 
 export function RichEditor(props: {
-  onReturn: (content: string) => void;
+  onReturn: () => void;
   focusInitial: boolean;
   initContent: string;
   onBlur?: () => void;
@@ -30,16 +33,17 @@ export function RichEditor(props: {
     onBlur,
     onFocus,
     placeholder,
-    onChange,
     changeDebounceTime,
     onChangeDebounce
   } = props;
 
   const changeRef$ = useRef(new Subject<EditorState>());
-  const [toolbarPosition, setToolbarPosition] = useState({top: 0, left: 0});
+  const [toolbarPosition, setToolbarPosition] = useState({ top: 0, left: 0 });
   const containerRef = useRef<HTMLDivElement>();
   const [editorState, setEditorState] = useState(
-    EditorState.createWithContent(ContentState.createFromText(initContent))
+    initContent
+      ? EditorState.createWithContent(convertFromRaw(JSON.parse(initContent)))
+      : EditorState.createWithContent(ContentState.createFromText(''))
   );
   const [isSelected, setIsSelected] = useState(false);
 
@@ -57,19 +61,19 @@ export function RichEditor(props: {
         setToolbarPosition({
           top: selectionRect.top - containerRect.top,
           left: selectionRect.left - containerRect.left + selectionRect.width / 2
-        })
+        });
       }
     }
 
-    if (editorState.getCurrentContent().getPlainText() === changedEditorState.getCurrentContent().getPlainText()) {
+    if (editorState.getCurrentContent() === changedEditorState.getCurrentContent()) {
       return;
     }
     changeRef$.current.next(changedEditorState);
-    onChange && onChange(changedEditorState.getCurrentContent().getPlainText());
   };
 
   const handleOnBlur = () => {
     onBlur && onBlur();
+    setIsSelected(false);
   };
 
   const handleOnFocus = () => {
@@ -80,7 +84,7 @@ export function RichEditor(props: {
   const handleReturn = (e: React.KeyboardEvent<{}>, editorState: EditorState): DraftHandleValue => {
     editorRef.current.blur();
     e.preventDefault();
-    onReturn(editorState.getCurrentContent().getPlainText());
+    onReturn();
     return 'handled';
   };
 
@@ -97,7 +101,7 @@ export function RichEditor(props: {
     const subscriber = changeRef$.current
       .pipe(debounceTime(changeDebounceTime || 600))
       .subscribe((state: EditorState) => {
-        onChangeDebounce(state.getCurrentContent().getPlainText());
+        onChangeDebounce(JSON.stringify(convertToRaw(state.getCurrentContent())));
       });
     return () => {
       subscriber.unsubscribe();
@@ -115,7 +119,9 @@ export function RichEditor(props: {
         position={toolbarPosition}
         isOpen={isSelected}
         changeInlineStyle={style => {
-          setEditorState(RichUtils.toggleInlineStyle(editorState, style));
+          const styledState = RichUtils.toggleInlineStyle(editorState, style);
+          setEditorState(styledState);
+          changeRef$.current.next(editorState);
         }}
       />
       <Editor
