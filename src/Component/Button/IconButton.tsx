@@ -31,6 +31,7 @@ export const IconButton = React.forwardRef((props: {
         size={props.iconSize || 'lg'}
         icon={props.icon}
         style={{
+          width: 18,
           ...props.iconStyle,
         }}
       />

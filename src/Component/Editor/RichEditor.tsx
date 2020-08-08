@@ -10,7 +10,7 @@ import Draft, {
 
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { RichEditorToolBar } from './RichEditorToolBar';
+import { RichEditorToolBar } from './Toolbar/RichEditorToolBar';
 
 export function RichEditor(props: {
   onReturn: (content: string) => void;
