@@ -23,8 +23,6 @@ export function MoreBlockMenu({ belongBlockId, isOpen, closeModal, afterOpenModa
           transform: "unset"
         }
       }}
-
-      contentLabel="Example Modal"
     >
       <List>
         <ListItem>

@@ -1,6 +1,6 @@
 import { generateTemporarilyId } from '../../util/id';
-import { IPageDetail } from "../../domain/page";
-import { AppLogger } from "../../util/logger";
+import { IPageDetail } from '../../domain/page';
+import { AppLogger } from '../../util/logger';
 
 export interface CreatePageBlockPayload {
   spaceId: string;
@@ -20,9 +20,9 @@ export function CreatePageBlockRequest(payload: CreatePageBlockPayload) {
         url: `/page/${payload.pageId}/block`,
         method: 'post',
         data: payload,
-        responseType: 'text',
-      },
-    },
+        responseType: 'text'
+      }
+    }
   };
 }
 
@@ -40,9 +40,9 @@ export function UpdatePageBlockRequest(payload: UpdatePageBlockPayload) {
       request: {
         url: `/page/${payload.pageId}/block/${payload.blockId}`,
         method: 'put',
-        data: payload,
-      },
-    },
+        data: payload
+      }
+    }
   };
 }
 
@@ -57,8 +57,8 @@ export function MovePageBlockRequest(payload: MovePageBlockPayload) {
   const pageDetail: IPageDetail = payload.pageDetail;
   let blocks = Array.from(pageDetail.blocks || []);
 
-  const draggedBlock = blocks.find((b) => b.id === payload.blockId);
-  const draggedBlockIndex = blocks.findIndex((b) => b.id === payload.blockId);
+  const draggedBlock = blocks.find(b => b.id === payload.blockId);
+  const draggedBlockIndex = blocks.findIndex(b => b.id === payload.blockId);
   if (draggedBlockIndex < 0) {
     AppLogger.error(new Error(`moving block not exist.`));
   } else {
@@ -80,28 +80,35 @@ export function MovePageBlockRequest(payload: MovePageBlockPayload) {
           blockIds: blocks.map(b => b.id)
         }
       }
-    },
+    }
   };
 }
 
-export function UploadPageImageRequest(payload: {
-  pageId: string,
-  spaceId: string,
-  previousBlockId?: string,
-  data
-}) {
+export function UploadPageImageRequest(payload: { pageId: string; spaceId: string; previousBlockId?: string; data }) {
   const formData = new FormData();
-  formData.append("data", payload.data);
-  formData.append("spaceId", payload.spaceId)
-  formData.append("previousBlockId", payload.previousBlockId)
+  formData.append('data', payload.data);
+  formData.append('spaceId', payload.spaceId);
+  formData.append('previousBlockId', payload.previousBlockId);
   return {
     type: 'UPDATE_PAGE_BLOCK',
     payload: {
       request: {
         url: `/page/${payload.pageId}/block/image`,
         method: 'post',
-        data: formData,
-      },
-    },
-  }
+        data: formData
+      }
+    }
+  };
+}
+
+export function DeleteBlockRequest(payload: { pageId: string; blockId: string }) {
+  return {
+    type: 'DELETE_PAGE_BLOCK',
+    payload: {
+      request: {
+        url: `/page/${payload.pageId}/block/image`,
+        method: 'delete'
+      }
+    }
+  };
 }

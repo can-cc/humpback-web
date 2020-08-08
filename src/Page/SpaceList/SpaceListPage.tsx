@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { AppRootState } from '../../redux/reducer';
 import { selectSpaceList } from '../../redux/selector/space-selector';
 import { useHistory } from 'react-router-dom';
-import { Heading } from "../../Component/Typography/Heading";
 import { PageHeading } from "../../Component/Typography/PageHeading";
 
 export function SpaceListPage() {
