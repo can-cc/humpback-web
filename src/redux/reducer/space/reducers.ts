@@ -37,10 +37,10 @@ export function reducePageListSuccess(state: SpaceState, action: AxiosSuccessAct
   }
   const spaceId = action.meta.previousAction.meta.spaceId;
   const space = state.spaceEntities[spaceId];
-  if (!space) {
-    AppLogger.error(`space not found in state, [action] = `, action);
-    return state;
-  }
+  // if (!space) {
+  //   AppLogger.error(`space not found in state, [action] = `, action);
+  //   return state;
+  // }
   const spaceWithPages: ISpace = { ...space, pages: action.payload.data as IPage[] };
   const normalizedData = normalize(spaceWithPages, SpaceSchema);
   return buildStateWorker<SpaceState>(state).pipe(
@@ -58,7 +58,13 @@ export function reduceSpaceList(state: SpaceState, action: AxiosSuccessAction): 
   return {
     ...state,
     spaces: normalizedData.result,
-    spaceEntities: normalizedData.entities.spaces,
+    spaceEntities: normalizedData.result.reduce((result, spaceId) => {
+      result[spaceId] = {
+        ...state.spaceEntities[spaceId],
+        ...normalizedData.entities.spaces[spaceId]
+      }
+      return result;
+    }, {})
   };
 }
 

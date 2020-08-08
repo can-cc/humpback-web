@@ -118,6 +118,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
       </DragDropContext>
 
       <MoreBlockMenu
+        belongBlockId={operatingBlockId}
         isOpen={isMoreBlockMenuOpen}
         closeModal={() => setIsMoreBlockMenuOpen(false)}
         afterOpenModal={() => {}}

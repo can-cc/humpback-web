@@ -6,7 +6,8 @@ export function RichEditorToolBar({ isOpen, changeInlineStyle, position }) {
   return (
     <div
       style={{
-        display: isOpen ? 'block' : 'none',
+        display: isOpen ? 'flex' : 'none',
+        flexWrap: 'nowrap',
         position: 'absolute',
         backgroundColor: 'white',
         border: '1px solid #eee',
@@ -15,7 +16,7 @@ export function RichEditorToolBar({ isOpen, changeInlineStyle, position }) {
         zIndex: 1000,
         top: position.top - 32,
         left: position.left,
-        transform: 'translate(-50%, 0)'
+        transform: 'translate(-50%, 0)',
       }}
     >
       <BoldButton onClick={() => changeInlineStyle('BOLD')} />

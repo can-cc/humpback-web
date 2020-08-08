@@ -1,7 +1,11 @@
 import React from 'react';
 import { Modal } from '../../../../Component/Modal/Modal';
+import { List, ListItem } from "../../../../Component/List/List";
+import { Button } from "../../../../Component/Button/Button";
+import { Icon } from "../../../../Component/Icon";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
-export function MoreBlockMenu({ isOpen, closeModal, afterOpenModal, position }) {
+export function MoreBlockMenu({ belongBlockId, isOpen, closeModal, afterOpenModal, position }) {
   return (
     <Modal
       isOpen={isOpen}
@@ -22,16 +26,15 @@ export function MoreBlockMenu({ isOpen, closeModal, afterOpenModal, position }) 
 
       contentLabel="Example Modal"
     >
-      <h2>Hello</h2>
-      <button onClick={closeModal}>close</button>
-      <div>I am a modal</div>
-      <form>
-        <input />
-        <button>tab navigation</button>
-        <button>stays</button>
-        <button>inside</button>
-        <button>the modal</button>
-      </form>
+      <List>
+        <ListItem>
+          <Button style={{color: 'red'}} onClick={() => {}}>
+            <Icon icon={faTrashAlt} />
+            删除
+          </Button>
+        </ListItem>
+
+      </List>
     </Modal>
   );
 }

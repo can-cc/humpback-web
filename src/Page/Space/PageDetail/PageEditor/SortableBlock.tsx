@@ -38,9 +38,13 @@ export function SortableBlock({
   const moreButtonRef = createRef<HTMLDivElement>();
   const addButtonRef = createRef<HTMLDivElement>();
 
-  const onMenuDivClick = () => {
+  const onMenuIconClick = () => {
     const menuButtonRect = moreButtonRef.current.getBoundingClientRect();
     onOpenMoreMenu(menuButtonRect);
+  };
+
+  const onAddIconClick = () => {
+    onOpenAddMenu(addButtonRef.current.getBoundingClientRect());
   };
 
   const onChangeDebounce = useCallback(
@@ -74,16 +78,11 @@ export function SortableBlock({
               }}
             >
               <div ref={addButtonRef} style={{ display: 'inline-block' }}>
-                <IconButton
-                  icon={faPlus}
-                  onClick={() => {
-                    onOpenAddMenu(addButtonRef.current.getBoundingClientRect());
-                  }}
-                />
+                <IconButton icon={faPlus} onClick={onAddIconClick} />
               </div>
 
               <div ref={moreButtonRef} style={{ display: 'inline-block', cursor: '-webkit-grab' }}>
-                <IconButton icon={faEllipsisV} onClick={onMenuDivClick} />
+                <IconButton icon={faEllipsisV} onClick={onMenuIconClick} />
               </div>
             </div>
 
