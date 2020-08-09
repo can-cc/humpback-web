@@ -12,10 +12,11 @@ import { CreatePageBlockRequest, MovePageBlockRequest } from '../../action/page-
 import { selectPage } from '../../selector/page-selector';
 import { AppRootState } from '../index';
 import cloneDeep from 'lodash/cloneDeep';
+import remove from 'lodash/remove';
 import { UpdatePageRequest } from '../../action/page-action';
 
 function mergePageEntities(pageEntities: NormalizedEntities<IPage>) {
-  return function (state: SpaceState): SpaceState {
+  return function(state: SpaceState): SpaceState {
     return Object.keys(pageEntities).reduce((state: SpaceState, id: string): SpaceState => {
       return {
         ...state,
@@ -23,9 +24,9 @@ function mergePageEntities(pageEntities: NormalizedEntities<IPage>) {
           ...state.pageEntities,
           [id]: {
             ...state.pageEntities[id],
-            ...pageEntities[id],
-          },
-        },
+            ...pageEntities[id]
+          }
+        }
       };
     }, state);
   };
@@ -62,7 +63,7 @@ export function reduceSpaceList(state: SpaceState, action: AxiosSuccessAction): 
       result[spaceId] = {
         ...state.spaceEntities[spaceId],
         ...normalizedData.entities.spaces[spaceId]
-      }
+      };
       return result;
     }, {})
   };
@@ -81,12 +82,12 @@ export function reduceCreatePageBlock(
   const newBlock = {
     id: action.meta.temporaryId,
     content: action.meta.content,
-    focusInitial: action.meta.focusInitial,
+    focusInitial: action.meta.focusInitial
   };
   if (!newPage.blocks) {
     newPage.blocks = [newBlock];
   } else {
-    const previousBlockIndex = newPage.blocks.findIndex((b) => b.id === action.meta.previousBlockId);
+    const previousBlockIndex = newPage.blocks.findIndex(b => b.id === action.meta.previousBlockId);
     if (previousBlockIndex >= 0) {
       newPage.blocks.splice(previousBlockIndex + 1, 0, newBlock);
     } else {
@@ -102,7 +103,7 @@ export function reduceCreatePageBlockSuccess(state: SpaceState, action: AxiosSuc
   const createdBlockId = action.payload.data;
   const page = selectPage(
     {
-      space: state,
+      space: state
     } as AppRootState,
     pageId
   );
@@ -145,8 +146,25 @@ export function reduceUpdatePage(state: SpaceState, action: ReturnType<typeof Up
       ...state.pageEntities,
       [action.meta.pageId]: {
         ...state.pageEntities[action.meta.pageId],
-        ...action.meta,
-      },
-    },
+        ...action.meta
+      }
+    }
+  };
+}
+
+export function reduceDeletePageBlock(state: SpaceState, action: AxiosSuccessAction) {
+  const pageId = action.meta.previousAction.payload.pageId;
+  const blockId = action.meta.previousAction.payload.blockId;
+  const newBlocks = Array.from(state.pageEntities[pageId].blocks);
+  remove(newBlocks, id => blockId === id);
+  return {
+    ...state,
+    pageEntities: {
+      ...state.pageEntities,
+      [pageId]: {
+        ...state.pageEntities[pageId],
+        blocks: newBlocks
+      }
+    }
   };
 }

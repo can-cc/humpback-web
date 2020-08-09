@@ -40,11 +40,18 @@ export function RichEditor(props: {
   const changeRef$ = useRef(new Subject<EditorState>());
   const [toolbarPosition, setToolbarPosition] = useState({ top: 0, left: 0 });
   const containerRef = useRef<HTMLDivElement>();
-  const [editorState, setEditorState] = useState(
-    initContent
+
+  let initEditorState: EditorState;
+  try {
+    initEditorState = initContent
       ? EditorState.createWithContent(convertFromRaw(JSON.parse(initContent)))
-      : EditorState.createWithContent(ContentState.createFromText(''))
-  );
+      : EditorState.createWithContent(ContentState.createFromText(''));
+  } catch (e) {
+    console.error(`parse init rich editor content fail, [init content] = ${initContent}`);
+    initEditorState = EditorState.createWithContent(ContentState.createFromText(''));
+  }
+
+  const [editorState, setEditorState] = useState(initEditorState);
   const [isSelected, setIsSelected] = useState(false);
 
   const handleOnChange = changedEditorState => {
@@ -112,7 +119,9 @@ export function RichEditor(props: {
     <div
       ref={containerRef}
       style={{
-        position: 'relative'
+        position: 'relative',
+        width: '100%',
+        minHeight: '1em'
       }}
     >
       <RichEditorToolBar
@@ -121,7 +130,7 @@ export function RichEditor(props: {
         changeInlineStyle={style => {
           const styledState = RichUtils.toggleInlineStyle(editorState, style);
           setEditorState(styledState);
-          changeRef$.current.next(editorState);
+          changeRef$.current.next(styledState);
         }}
       />
       <Editor

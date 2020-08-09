@@ -105,8 +105,10 @@ export function DeleteBlockRequest(payload: { pageId: string; blockId: string })
   return {
     type: 'DELETE_PAGE_BLOCK',
     payload: {
+      pageId: payload.pageId,
+      blockId: payload.blockId,
       request: {
-        url: `/page/${payload.pageId}/block/image`,
+        url: `/page/${payload.pageId}/block/${payload.blockId}`,
         method: 'delete'
       }
     }

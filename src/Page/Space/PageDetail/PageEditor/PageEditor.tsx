@@ -120,6 +120,7 @@ export function PageEditor(props: { spaceId: string; pageId: string; isNew: bool
       <MoreBlockMenu
         belongBlockId={operatingBlockId}
         isOpen={isMoreBlockMenuOpen}
+        pageId={pageId}
         closeModal={() => setIsMoreBlockMenuOpen(false)}
         afterOpenModal={() => {}}
         position={{
