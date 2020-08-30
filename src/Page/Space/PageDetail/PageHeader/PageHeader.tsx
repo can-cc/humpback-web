@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { IPage } from '../../../../domain/page';
+import { IPage } from '../../../../typing/page';
 import { useDispatch } from 'react-redux';
 import { UpdatePageRequest } from '../../../../redux/action/page-action';
 import { useParams } from 'react-router-dom';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex } from '../../../../Component/Flex';
 import { Bold } from '../../../../Component/Bold';
-import { ISpace } from '../../../../domain/space';
+import { ISpace } from '../../../../typing/space';
 
 export function SpaceInfo(props: { space: ISpace }) {
   return (

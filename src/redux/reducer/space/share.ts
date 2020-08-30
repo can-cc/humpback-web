@@ -1,21 +1,21 @@
-import { IPage, IPageDetail } from '../../../domain/page';
+import { IPage, IPageDetail } from '../../../typing/page';
 import { normalize } from 'normalizr';
 import { PageSchema } from '../../normalizr';
 import { buildStateWorker } from '../reducer-util';
 import { SpaceState } from './space-reducer';
-import { ISpace } from '../../../domain/space';
+import { ISpace } from '../../../typing/space';
 
 export function mergePageToState(page: IPage) {
-  return function (state: SpaceState): SpaceState {
+  return function(state: SpaceState): SpaceState {
     return {
       ...state,
       pageEntities: {
         ...state.pageEntities,
         [page.id]: {
           ...state.pageEntities[page.id],
-          ...page,
-        },
-      },
+          ...page
+        }
+      }
     };
   };
 }
@@ -29,24 +29,24 @@ export function mergePageDetailToState(state: SpaceState, page: IPageDetail): Sp
         ...state,
         pageBlockEntities: {
           ...state.pageBlockEntities,
-          ...normalizedData.entities.blocks,
-        },
+          ...normalizedData.entities.blocks
+        }
       };
     }
   );
 }
 
 export function mergeSpaceInState(space: ISpace) {
-  return function (state: SpaceState) {
+  return function(state: SpaceState) {
     return {
       ...state,
       spaceEntities: {
         ...state.spaceEntities,
         [space.id]: {
           ...state.spaceEntities[space.id],
-          ...space,
-        },
-      },
+          ...space
+        }
+      }
     };
   };
 }

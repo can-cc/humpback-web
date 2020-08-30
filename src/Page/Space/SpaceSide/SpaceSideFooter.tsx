@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '../../../Component/Button/Button';
-import { ISpace } from '../../../domain/space';
+import { ISpace } from '../../../typing/space';
 import { Flex } from '../../../Component/Flex';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';

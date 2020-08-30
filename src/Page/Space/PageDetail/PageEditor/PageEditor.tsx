@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { IPageBlock, IPageDetail } from '../../../../domain/page';
+import { IPageBlock, IPageDetail } from '../../../../typing/page';
 import { selectPage } from '../../../../redux/selector/page-selector';
 import { AppRootState } from '../../../../redux/reducer';
 import {

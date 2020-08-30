@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, ListItem, ListSection } from '../List/List';
 import { DropDownOverlay } from '../DropDown/DropDownOverlay';
-import { ISpace } from '../../domain/space';
+import { ISpace } from '../../typing/space';
 import { Divider } from '../Divider';
 import { useHistory } from 'react-router-dom';
 

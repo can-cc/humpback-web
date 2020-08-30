@@ -1,5 +1,5 @@
 import React, { LegacyRef, useState } from 'react';
-import { IPageBlock } from '../../../../domain/page';
+import { IPageBlock } from '../../../../typing/page';
 import { useHover } from '../../../../hook/hoverHook';
 import { ImageModal } from '../../../../Component/Modal/ImageModal/ImageModal';
 

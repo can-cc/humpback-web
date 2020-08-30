@@ -1,6 +1,6 @@
 import { AppAction, AxiosSuccessAction } from '../../action/action';
-import { ISpace } from '../../../domain/space';
-import { IPage, IPageBlock, IPageDetail } from '../../../domain/page';
+import { ISpace } from '../../../typing/space';
+import { IPage, IPageBlock, IPageDetail } from '../../../typing/page';
 import { NormalizedEntities } from '../interface';
 import { CreatePageBlockRequest, MovePageBlockRequest } from '../../action/page-block-action';
 import {

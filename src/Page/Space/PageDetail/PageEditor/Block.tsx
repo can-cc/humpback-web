@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BlockType, IPageBlock } from '../../../../domain/page';
+import { BlockType, IPageBlock } from '../../../../typing/page';
 import { RichEditor } from '../../../../Component/Editor/RichEditor';
 import { ImageBlock } from "./ImageBlock";
 

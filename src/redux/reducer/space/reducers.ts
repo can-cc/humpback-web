@@ -1,7 +1,7 @@
 import { AxiosSuccessAction } from '../../action/action';
 import { AppLogger } from '../../../util/logger';
-import { ISpace } from '../../../domain/space';
-import { IPage, IPageBlock, IPageDetail } from '../../../domain/page';
+import { ISpace } from '../../../typing/space';
+import { IPage, IPageBlock, IPageDetail } from '../../../typing/page';
 import { normalize } from 'normalizr';
 import { SpaceListSchema, SpaceSchema } from '../../normalizr';
 import { buildStateWorker } from '../reducer-util';

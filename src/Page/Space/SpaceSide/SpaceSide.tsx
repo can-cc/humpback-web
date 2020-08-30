@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { AppRootState } from '../../../redux/reducer';
 import { selectSpaceById } from '../../../redux/selector/space-selector';
 import { selectPageList } from '../../../redux/selector/page-selector';
-import { IPage } from '../../../domain/page';
+import { IPage } from '../../../typing/page';
 import { AppText } from '../../../Component/Typography/AppText';
 import { RootPageCreator } from './RootPageCreator';
 import { Divider } from '../../../Component/Divider';

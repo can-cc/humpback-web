@@ -1,5 +1,5 @@
 import { generateTemporarilyId } from '../../util/id';
-import { IPageDetail } from '../../domain/page';
+import { IPageDetail } from '../../typing/page';
 import { AppLogger } from '../../util/logger';
 
 export interface CreatePageBlockPayload {
